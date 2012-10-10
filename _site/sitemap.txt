@@ -1,10 +1,12 @@
 
-http://username.github.com/archive.html
-http://username.github.com/atom.xml
-http://username.github.com/categories.html
-http://username.github.com/index.html
-http://username.github.com/pages.html
-http://username.github.com/sitemap.txt
-http://username.github.com/tags.html
+http://nu_lts.bitbucket.org/archive.html
+http://nu_lts.bitbucket.org/atom.xml
+http://nu_lts.bitbucket.org/categories.html
+http://nu_lts.bitbucket.org/index.html
+http://nu_lts.bitbucket.org/pages.html
+http://nu_lts.bitbucket.org/sitemap.txt
+http://nu_lts.bitbucket.org/tags.html
 
-http://username.github.com/lessons/2011/12/29/jekyll-introduction
+http://nu_lts.bitbucket.org/drush/2012/10/10/deploy
+http://nu_lts.bitbucket.org/drush/2012/10/05/drush
+http://nu_lts.bitbucket.org/lessons/2011/12/29/jekyll-introduction

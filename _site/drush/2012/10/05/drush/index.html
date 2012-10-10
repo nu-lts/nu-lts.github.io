@@ -1,374 +1,341 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
- 
- <title>Library Technology Services</title>
- <link href="http://nu_lts.bitbucket.org/atom.xml" rel="self"/>
- <link href="http://nu_lts.bitbucket.org"/>
- <updated>2012-10-10T16:24:31-04:00</updated>
- <id>http://nu_lts.bitbucket.org</id>
- <author>
-   <name>Steven Bassett</name>
-   <email>s.bassett@neu.edu</email>
- </author>
 
- 
- <entry>
-   <title>Deploy</title>
-   <link href="http://nu_lts.bitbucket.org/drush/2012/10/10/deploy"/>
-   <updated>2012-10-10T00:00:00-04:00</updated>
-   <id>http://nu_lts.bitbucket.org/drush/2012/10/10/deploy</id>
-   <content type="html">&lt;h1 id='a_drupal_development_environment_on_os_x_with_mamp_pro_eclipse_xdebug_and'&gt;A Drupal Development Environment on OS X with MAMP Pro, Eclipse, xDebug, and&lt;/h1&gt;
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Drush</title>
+        
+        <meta name="author" content="Steven Bassett">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<!--         <link rel="stylesheet" href="css/normalize.css"> -->
+
+<!--
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/cyborg.min.css">
+-->
+        <link rel="stylesheet/less" type="text/css" href="/assets/themes/nu_lts/less/global.less">
+
+        <script src="/assets/themes/nu_lts/js/vendor/less-1.3.0.min.js" type="text/javascript"></script>
+        <script>
+          //call less to be in developer mode.
+less.watch();
+        </script>
+
+        <script src="/assets/themes/nu_lts/js/vendor/modernizr-2.6.1.min.js"></script>
+    </head>
+
+  <body>
+<header class="jumbotron subhead">
+  <h1>
+    <a href="http://www.northeastern.edu/" class="brand">
+      <span class="nu">Northeastern University</br>
+      <span class="libraries">University Libraries</span></span>
+    </a>
+  </h1>
+    <p class="lead">Library Techology Services</p>
+</header>
+
+    <div class="navbar navbar-static">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Library Technology Services</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              
+              
+              
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
 
-&lt;p&gt;Drush&lt;/p&gt;
 
-&lt;p&gt;Submitted by brian on Thu, 07/12/2012 - 08:57&lt;/p&gt;
 
-&lt;h2 id='mamp'&gt;MAMP&lt;/h2&gt;
+            </ul>
+          </div> <!-- End nav collapse -->
+        </div>
+      </div>
+    </div>
+<!-- end navbar -->
+    <div class="container-fluid">
 
-&lt;p&gt;These instructions are somewhat specific to MAMP PRO 2.1.1&lt;/p&gt;
+      <div class="content">
+        
+<div class="page-header">
+  <h1>Drush <small>Supporting tagline</small></h1>
+</div>
 
-&lt;p&gt;&lt;a href='http://www.mamp.info/en/downloads/index.html'&gt;Download&lt;/a&gt;, install, and launch MAMP Pro. Under the PHP tab, select php 5.3.x from version pulldown. Click &amp;#8220;Apply&amp;#8221;. Click &amp;#8220;Start&amp;#8221;.&lt;/p&gt;
+<div class="row">
+  <div class="span8">
+    <h3 id='core_drush_commands'>Core drush commands</h3>
 
-&lt;p&gt;Add the MAMP executables to your path.&lt;/p&gt;
+<ul>
+<li><a href='#archive-dump'><code>archive-dump</code></a> Backup your code, files, and database into a single file.</li>
 
-&lt;pre&gt;&lt;code&gt;chmod +x /Applications/MAMP/bin/php/php5.3.14/bin/*
-echo &amp;quot;export PATH=/Applications/MAMP/bin/php/php5.3.14/bin:/Applications/MAMP/Library/bin:\$PATH&amp;quot; &amp;gt;&amp;gt; ~/.profile
-. ~/.profile&lt;/code&gt;&lt;/pre&gt;
+<li><a href='#archive-restore'><code>archive-restore</code></a> Expand a site archive into a Drupal web site.</li>
 
-&lt;p&gt;Add a symlink to the MAMP Mysql socket to allow drush to connect.&lt;/p&gt;
+<li><a href='#cache-clear'><code>cache-clear</code></a> Clear a specific cache, or all drupal caches.</li>
 
-&lt;pre&gt;&lt;code&gt;sudo mkdir /var/mysql
-sudo ln -s /Applications/MAMP/tmp/mysql/mysql.sock /var/mysql/mysql.sock&lt;/code&gt;&lt;/pre&gt;
+<li><a href='#cache-get'><code>cache-get</code></a> Fetch a cached object and display it.</li>
 
-&lt;h2 id='xdebug'&gt;xDebug&lt;/h2&gt;
+<li><a href='#cache-set'><code>cache-set</code></a> Cache an object expressed in JSON or var_export() format.</li>
 
-&lt;p&gt;In MAMP menu, go to File-&amp;gt;Edit Template-&amp;gt;PHP 5.3.x php.ini, and uncomment the xdebug zend_extension line, and add:&lt;/p&gt;
+<li><a href='#core-config'><code>core-config</code></a> Edit drushrc, site alias, and Drupal settings.php files.</li>
 
-&lt;pre&gt;&lt;code&gt;xdebug.remote_enable=1
-xdebug.remote_host=localhost
-xdebug.remote_port=9000
-xebug.remote_handler=dbgp&lt;/code&gt;&lt;/pre&gt;
+<li><a href='#core-cron'><code>core-cron</code></a> Run all cron hooks in all active modules for specified site.</li>
 
-&lt;p&gt;Restart the stack (&amp;#8220;Stop&amp;#8221;, then &amp;#8220;Start&amp;#8221;) and click &amp;#8220;WebStart&amp;#8221; to verify xDebug is enabled (phpinfo, search for &amp;#8220;xdebug&amp;#8221;).&lt;/p&gt;
+<li><a href='#core-execute'><code>core-execute</code></a> Execute a shell command. Usually used with a site alias.</li>
 
-&lt;h2 id='eclipse'&gt;Eclipse&lt;/h2&gt;
+<li><a href='#core-quick-drupal'><code>core-quick-drupal</code></a> Download, install, serve and login to Drupal with minimal configuration and dependencies.</li>
 
-&lt;p&gt;Download and install &lt;a href='http://code.google.com/p/zend-
-sdk/downloads/list'&gt;Eclipse+PDT&lt;/a&gt; or &lt;a href='http://www.zend.com/en/products/studio/downloads'&gt;Zend Studio&lt;/a&gt;.&lt;/p&gt;
+<li><a href='#core-requirements'><code>core-requirements</code></a> Provides information about things that may be wrong in your Drupal installation, if any.</li>
 
-&lt;p&gt;Configure eclipse by following the instructions under &amp;#8220;Eclipse Hook Templates&amp;#8221; and &amp;#8220;PHP Development Tools (PDT)&amp;#8221; on the &lt;a href='http://drupal.org/node/75242'&gt;Drupal Configuring Eclipse page&lt;/a&gt;.&lt;/p&gt;
+<li><a href='#core-rsync'><code>core-rsync</code></a> Rsync the Drupal tree to/from another server using ssh.</li>
 
-&lt;p&gt;In Eclipse preferences, open PHP-&amp;gt;PHP Executables, and set the php interpreter to be the MAMP 5.3.x executable.&lt;/p&gt;
+<li><a href='#core-status'><code>core-status</code></a> Provides a birds-eye view of the current Drupal installation, if any.</li>
 
-&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/eclipse_i
-nterpreter.png' alt='Eclipse PHP Interpreter' /&gt;&lt;/p&gt;
+<li><a href='#core-topic'><code>core-topic</code></a> Read detailed documentation on a given topic.</li>
 
-&lt;p&gt;Eclipse PHP Interpreter&lt;/p&gt;
+<li><a href='#drupal-directory'><code>drupal-directory</code></a> Return path to a given module/theme directory.</li>
 
-&lt;p&gt;Create a test project to see if xDebug is working:&lt;/p&gt;
+<li><a href='#help'><code>help</code></a> Print this help message. See `drush help help` for more options.</li>
 
-&lt;p&gt;1. File-&amp;gt;New-&amp;gt;Project: &amp;#8220;PHP Project from Existing Directory&amp;#8221;. Set the location to the MAMP htdocs directory &lt;em&gt;/Applications/MAMP/htdocs&lt;/em&gt;&lt;/p&gt;
+<li><a href='#image-flush'><code>image-flush</code></a> Flush all derived images for a given style.</li>
 
-&lt;p&gt;&lt;img src='/files/field/image/new_project.png' alt='New Project' /&gt;&lt;/p&gt;
+<li><a href='#php-eval'><code>php-eval</code></a> Evaluate arbitrary php code after bootstrapping Drupal (if available).</li>
 
-&lt;p&gt;New Project&lt;/p&gt;
+<li><a href='#php-script'><code>php-script</code></a> Run php script(s).</li>
 
-&lt;p&gt;2. Open index.php, set breakpoint at first line of php (double click to left of line numbers).&lt;/p&gt;
+<li><a href='#queue-list'><code>queue-list</code></a> Returns a list of all defined queues</li>
 
-&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/breakpoint.png' alt='A Breakpoint' /&gt;&lt;/p&gt;
+<li><a href='#queue-run'><code>queue-run</code></a> Run a specific queue by name</li>
 
-&lt;p&gt;A Breakpoint&lt;/p&gt;
+<li><a href='#search-index'><code>search-index</code></a> Index the remaining search items without wiping the index.</li>
 
-&lt;p&gt;3. Open firefox, install &lt;a href='https://addons.mozilla.org/en-US/firefox/addon/easy-xdebug/?src=userprofile'&gt;easy Xdebug&lt;/a&gt; extension.&lt;/p&gt;
+<li><a href='#search-reindex'><code>search-reindex</code></a> Force the search index to be rebuilt.</li>
 
-&lt;p&gt;4. Go to &lt;a href='http://localhost:8888/'&gt;http://localhost:8888/&lt;/a&gt;.&lt;/p&gt;
+<li><a href='#search-status'><code>search-status</code></a> Show how many items remain to be indexed out of the total.</li>
 
-&lt;p&gt;5. Enable debugging by clicking the green bug icon in the status bar.&lt;/p&gt;
+<li><a href='#self-update'><code>self-update</code></a> Check to see if there is a newer Drush release available.</li>
 
-&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/easyxdebug.png' alt='Easy Xdebug Enabled' /&gt;&lt;/p&gt;
+<li><a href='#shell-alias'><code>shell-alias</code></a> Print all known shell alias records.</li>
 
-&lt;p&gt;Easy Xdebug Enabled&lt;/p&gt;
+<li><a href='#site-alias'><code>site-alias</code></a> Print site alias records for all known site aliases and local sites.</li>
 
-&lt;p&gt;6. Reload, and eclipse should pause execution at your breakpoint.&lt;/p&gt;
+<li><a href='#site-install'><code>site-install</code></a> Install Drupal along with modules/themes/configuration using the specified install profile.</li>
 
-&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/debugging_0.png' alt='Debugging' /&gt;&lt;/p&gt;
+<li><a href='#site-reset'><code>site-reset</code></a> Reset a persistently set site.</li>
 
-&lt;p&gt;Debugging&lt;/p&gt;
+<li><a href='#site-set'><code>site-set</code></a> Set a site alias to work on that will persist for the current session.</li>
 
-&lt;h2 id='drush'&gt;Drush&lt;/h2&gt;
+<li><a href='#site-ssh'><code>site-ssh</code></a> Connect to a Drupal site&#8217;s server via SSH for an interactive session or to run a shell command</li>
 
-&lt;pre&gt;&lt;code&gt;pear channel-discover pear.drush.org
-pear install drush/drush
-drush&lt;/code&gt;&lt;/pre&gt;
+<li><a href='#test-clean'><code>test-clean</code></a> Clean temporary tables and files.</li>
 
-&lt;h2 id='install_drupal'&gt;Install Drupal&lt;/h2&gt;
+<li><a href='#test-run'><code>test-run</code></a> Run tests. Note that you must use the &#8211;uri option.</li>
 
-&lt;pre&gt;&lt;code&gt;cd /Applications/MAMP/htdocs
-drush dl drupal&lt;/code&gt;&lt;/pre&gt;
+<li><a href='#updatedb'><code>updatedb</code></a> Apply any database updates required (as with running update.php).</li>
 
-&lt;p&gt;In MAMP, give MySQL a password, launch phpMyAdmin, and create a database for Drupal. Edit &lt;em&gt;/Applications/MAMP/htdocs/sites/default/settings.php&lt;/em&gt; to configure Drupal to connect to the database.&lt;/p&gt;
+<li><a href='#usage-send'><code>usage-send</code></a> Send anonymous Drush usage information to statistics logging site. Usage statistics contain the Drush command name and the Drush option names, but no arguments or option values.</li>
 
-&lt;p&gt;Go to &lt;a href='http://localhost:8888/'&gt;http://localhost:8888/&lt;/a&gt;&lt;/p&gt;
+<li><a href='#usage-show'><code>usage-show</code></a> Show Drush usage information that has been logged but not sent. Usage statistics contain the Drush command name and the Drush option names, but no arguments or option values.</li>
 
-&lt;h2 id='performace'&gt;Performace&lt;/h2&gt;
+<li><a href='#variable-delete'><code>variable-delete</code></a> Delete a variable.</li>
 
-&lt;h3 id='mysql'&gt;MYSQL&lt;/h3&gt;
+<li><a href='#variable-get'><code>variable-get</code></a> Get a list of some or all site variables and values.</li>
 
-&lt;p&gt;You may get &amp;#8220;MySql server has gone away&amp;#8221; errors. To fix, in MAMP, edit the mysql configuration by going to file-&amp;gt;edit template-&amp;gt;mysql. Change &lt;em&gt;max&lt;/em&gt;allowed_packet_ to&lt;/p&gt;
+<li><a href='#variable-set'><code>variable-set</code></a> Set a variable.</li>
 
-&lt;pre&gt;&lt;code&gt;max_allowed_packet =  16M&lt;/code&gt;&lt;/pre&gt;
+<li><a href='#version'><code>version</code></a> Show drush version.</li>
 
-&lt;h3 id='php'&gt;PHP&lt;/h3&gt;
+<li><a href='#watchdog-delete'><code>watchdog-delete</code></a> Delete watchdog messages.</li>
 
-&lt;p&gt;Increase both the MAMP PHP memory limit. In MAMP, edit the php configuration&lt;/p&gt;
+<li><a href='#watchdog-list'><code>watchdog-list</code></a> Show available message types and severity levels. A prompt will ask for a choice to show watchdog messages.</li>
 
-&lt;p&gt;file-&amp;gt;edit template-&amp;gt;php-&amp;gt;php5.3&lt;/p&gt;
+<li><a href='#watchdog-show'><code>watchdog-show</code></a> Show watchdog messages.</li>
+</ul>
 
-&lt;p&gt;change &lt;em&gt;memory&lt;/em&gt;limit_ to&lt;/p&gt;
+<h3 id='runserver_commands'>Runserver commands</h3>
 
-&lt;pre&gt;&lt;code&gt;memory_limit =  256M&lt;/code&gt;&lt;/pre&gt;
+<ul>
+<li><a href='#runserver'><code>runserver</code></a> Runs a lightweight built in http server for development.</li>
+</ul>
 
-&lt;p&gt;Increase the CLI PHP memory limit. To figure out where your CLI php.ini file is, use&lt;/p&gt;
+<h3 id='field_commands'>Field commands</h3>
 
-&lt;pre&gt;&lt;code&gt;which php
+<ul>
+<li><a href='#field-clone'><code>field-clone</code></a> Clone a field and all its instances.</li>
 
-php -i | grep  php.ini&lt;/code&gt;&lt;/pre&gt;
+<li><a href='#field-create'><code>field-create</code></a> Create fields and instances. Returns urls for field editing.</li>
 
-&lt;p&gt;change &lt;em&gt;memory&lt;/em&gt;limit_ to&lt;/p&gt;
+<li><a href='#field-delete'><code>field-delete</code></a> Delete a field and its instances.</li>
 
-&lt;pre&gt;&lt;code&gt;memory_limit =  -1&lt;/code&gt;&lt;/pre&gt;
+<li><a href='#field-info'><code>field-info</code></a> View information about fields, field_types, and widgets.</li>
 
-&lt;h2 id='references'&gt;References&lt;/h2&gt;
+<li><a href='#field-update'><code>field-update</code></a> Return URL for field editing web page.</li>
+</ul>
 
-&lt;p&gt;* &lt;a href='http://www.lullabot.com/articles/installing-php-pear-and-pecl-extensions-on-mamp-mac-os-x-107-lion'&gt;Installing PHP PEAR and PECL extensions on MAMP for Mac OS X 10.7 (Lion) | Lullabot&lt;/a&gt; * &lt;a href='http://tanc.me/blog/2011/your-typical-xdebug-primer-osx'&gt;Your typical Xdebug primer for OSX | tanc.me&lt;/a&gt; * &lt;a href='http://vmirgorod.name/blog/boosted-lamp-drupal-devs'&gt;Boosted LAMP for Drupal devs | Vadim Mirgorod&lt;/a&gt;&lt;/p&gt;
+<h3 id='project_manager_commands'>Project manager commands</h3>
 
-&lt;p&gt;Tags:&amp;nbsp_place_holder;&lt;/p&gt;
+<ul>
+<li><a href='#pm-disable'><code>pm-disable</code></a> Disable one or more extensions (modules or themes).</li>
 
-&lt;p&gt;&lt;a href='/tags/drupal'&gt;Drupal&lt;/a&gt;&lt;/p&gt;
+<li><a href='#pm-download'><code>pm-download</code></a> Download projects from drupal.org or other sources.</li>
 
-&lt;p&gt;© 2008-2012 Brian Fisher |&lt;/p&gt;</content>
- </entry>
- 
- <entry>
-   <title>Drush</title>
-   <link href="http://nu_lts.bitbucket.org/drush/2012/10/05/drush"/>
-   <updated>2012-10-05T00:00:00-04:00</updated>
-   <id>http://nu_lts.bitbucket.org/drush/2012/10/05/drush</id>
-   <content type="html">&lt;h3 id='core_drush_commands'&gt;Core drush commands&lt;/h3&gt;
+<li><a href='#pm-enable'><code>pm-enable</code></a> Enable one or more extensions (modules or themes).</li>
 
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='#archive-dump'&gt;&lt;code&gt;archive-dump&lt;/code&gt;&lt;/a&gt; Backup your code, files, and database into a single file.&lt;/li&gt;
+<li><a href='#pm-info'><code>pm-info</code></a> Show detailed info for one or more extensions (modules or themes).</li>
 
-&lt;li&gt;&lt;a href='#archive-restore'&gt;&lt;code&gt;archive-restore&lt;/code&gt;&lt;/a&gt; Expand a site archive into a Drupal web site.&lt;/li&gt;
+<li><a href='#pm-list'><code>pm-list</code></a> Show a list of available extensions (modules and themes).</li>
 
-&lt;li&gt;&lt;a href='#cache-clear'&gt;&lt;code&gt;cache-clear&lt;/code&gt;&lt;/a&gt; Clear a specific cache, or all drupal caches.&lt;/li&gt;
+<li><a href='#pm-refresh'><code>pm-refresh</code></a> Refresh update status information.</li>
 
-&lt;li&gt;&lt;a href='#cache-get'&gt;&lt;code&gt;cache-get&lt;/code&gt;&lt;/a&gt; Fetch a cached object and display it.&lt;/li&gt;
+<li><a href='#pm-releasenotes'><code>pm-releasenotes</code></a> Print release notes for given projects.</li>
 
-&lt;li&gt;&lt;a href='#cache-set'&gt;&lt;code&gt;cache-set&lt;/code&gt;&lt;/a&gt; Cache an object expressed in JSON or var_export() format.&lt;/li&gt;
+<li><a href='#pm-releases'><code>pm-releases</code></a> Print release information for given projects.</li>
 
-&lt;li&gt;&lt;a href='#core-config'&gt;&lt;code&gt;core-config&lt;/code&gt;&lt;/a&gt; Edit drushrc, site alias, and Drupal settings.php files.&lt;/li&gt;
+<li><a href='#pm-uninstall'><code>pm-uninstall</code></a> Uninstall one or more modules.</li>
 
-&lt;li&gt;&lt;a href='#core-cron'&gt;&lt;code&gt;core-cron&lt;/code&gt;&lt;/a&gt; Run all cron hooks in all active modules for specified site.&lt;/li&gt;
+<li><a href='#pm-update'><code>pm-update</code></a> Update Drupal core and contrib projects and apply any pending database updates (Same as pm-updatecode + updatedb).</li>
 
-&lt;li&gt;&lt;a href='#core-execute'&gt;&lt;code&gt;core-execute&lt;/code&gt;&lt;/a&gt; Execute a shell command. Usually used with a site alias.&lt;/li&gt;
+<li><a href='#pm-updatecode'><code>pm-updatecode</code></a> Update Drupal core and contrib projects to latest recommended releases.</li>
+</ul>
 
-&lt;li&gt;&lt;a href='#core-quick-drupal'&gt;&lt;code&gt;core-quick-drupal&lt;/code&gt;&lt;/a&gt; Download, install, serve and login to Drupal with minimal configuration and dependencies.&lt;/li&gt;
+<h3 id='sql_commands'>SQL commands</h3>
 
-&lt;li&gt;&lt;a href='#core-requirements'&gt;&lt;code&gt;core-requirements&lt;/code&gt;&lt;/a&gt; Provides information about things that may be wrong in your Drupal installation, if any.&lt;/li&gt;
+<ul>
+<li><a href='#sql-cli'><code>sql-cli</code></a> Open a SQL command-line interface using Drupal&#8217;s credentials.</li>
 
-&lt;li&gt;&lt;a href='#core-rsync'&gt;&lt;code&gt;core-rsync&lt;/code&gt;&lt;/a&gt; Rsync the Drupal tree to/from another server using ssh.&lt;/li&gt;
+<li><a href='#sql-connect'><code>sql-connect</code></a> A string for connecting to the DB.</li>
 
-&lt;li&gt;&lt;a href='#core-status'&gt;&lt;code&gt;core-status&lt;/code&gt;&lt;/a&gt; Provides a birds-eye view of the current Drupal installation, if any.&lt;/li&gt;
+<li><a href='#sql-create'><code>sql-create</code></a> Create a database.</li>
 
-&lt;li&gt;&lt;a href='#core-topic'&gt;&lt;code&gt;core-topic&lt;/code&gt;&lt;/a&gt; Read detailed documentation on a given topic.&lt;/li&gt;
+<li><a href='#sql-drop'><code>sql-drop</code></a> Drop all tables in a given database.</li>
 
-&lt;li&gt;&lt;a href='#drupal-directory'&gt;&lt;code&gt;drupal-directory&lt;/code&gt;&lt;/a&gt; Return path to a given module/theme directory.&lt;/li&gt;
+<li><a href='#sql-dump'><code>sql-dump</code></a> Exports the Drupal DB as SQL using mysqldump or equivalent.</li>
 
-&lt;li&gt;&lt;a href='#help'&gt;&lt;code&gt;help&lt;/code&gt;&lt;/a&gt; Print this help message. See `drush help help` for more options.&lt;/li&gt;
+<li><a href='#sql-query'><code>sql-query</code></a> Execute a query against the site database.</li>
 
-&lt;li&gt;&lt;a href='#image-flush'&gt;&lt;code&gt;image-flush&lt;/code&gt;&lt;/a&gt; Flush all derived images for a given style.&lt;/li&gt;
+<li><a href='#sql-sync'><code>sql-sync</code></a> Copy and import source database to target database. Transfers via rsync.</li>
+</ul>
 
-&lt;li&gt;&lt;a href='#php-eval'&gt;&lt;code&gt;php-eval&lt;/code&gt;&lt;/a&gt; Evaluate arbitrary php code after bootstrapping Drupal (if available).&lt;/li&gt;
+<h3 id='user_commands'>User commands</h3>
 
-&lt;li&gt;&lt;a href='#php-script'&gt;&lt;code&gt;php-script&lt;/code&gt;&lt;/a&gt; Run php script(s).&lt;/li&gt;
+<ul>
+<li><a href='#user-add-role'><code>user-add-role</code></a> Add a role to the specified user accounts.</li>
 
-&lt;li&gt;&lt;a href='#queue-list'&gt;&lt;code&gt;queue-list&lt;/code&gt;&lt;/a&gt; Returns a list of all defined queues&lt;/li&gt;
+<li><a href='#user-block'><code>user-block</code></a> Block the specified user(s).</li>
 
-&lt;li&gt;&lt;a href='#queue-run'&gt;&lt;code&gt;queue-run&lt;/code&gt;&lt;/a&gt; Run a specific queue by name&lt;/li&gt;
+<li><a href='#user-cancel'><code>user-cancel</code></a> Cancel a user account with the specified name.</li>
 
-&lt;li&gt;&lt;a href='#search-index'&gt;&lt;code&gt;search-index&lt;/code&gt;&lt;/a&gt; Index the remaining search items without wiping the index.&lt;/li&gt;
+<li><a href='#user-create'><code>user-create</code></a> Create a user account with the specified name.</li>
 
-&lt;li&gt;&lt;a href='#search-reindex'&gt;&lt;code&gt;search-reindex&lt;/code&gt;&lt;/a&gt; Force the search index to be rebuilt.&lt;/li&gt;
+<li><a href='#user-information'><code>user-information</code></a> Print information about the specified user(s).</li>
 
-&lt;li&gt;&lt;a href='#search-status'&gt;&lt;code&gt;search-status&lt;/code&gt;&lt;/a&gt; Show how many items remain to be indexed out of the total.&lt;/li&gt;
+<li><a href='#user-login'><code>user-login</code></a> Display a one time login link for the given user account (defaults to uid 1).</li>
 
-&lt;li&gt;&lt;a href='#self-update'&gt;&lt;code&gt;self-update&lt;/code&gt;&lt;/a&gt; Check to see if there is a newer Drush release available.&lt;/li&gt;
+<li><a href='#user-password'><code>user-password</code></a> (Re)Set the password for the user account with the specified name.</li>
 
-&lt;li&gt;&lt;a href='#shell-alias'&gt;&lt;code&gt;shell-alias&lt;/code&gt;&lt;/a&gt; Print all known shell alias records.&lt;/li&gt;
+<li><a href='#user-remove-role'><code>user-remove-role</code></a> Remove a role from the specified user accounts.</li>
 
-&lt;li&gt;&lt;a href='#site-alias'&gt;&lt;code&gt;site-alias&lt;/code&gt;&lt;/a&gt; Print site alias records for all known site aliases and local sites.&lt;/li&gt;
+<li><a href='#user-unblock'><code>user-unblock</code></a> Unblock the specified user(s).</li>
+</ul>
 
-&lt;li&gt;&lt;a href='#site-install'&gt;&lt;code&gt;site-install&lt;/code&gt;&lt;/a&gt; Install Drupal along with modules/themes/configuration using the specified install profile.&lt;/li&gt;
+<h3 id='other_commands'>Other commands</h3>
 
-&lt;li&gt;&lt;a href='#site-reset'&gt;&lt;code&gt;site-reset&lt;/code&gt;&lt;/a&gt; Reset a persistently set site.&lt;/li&gt;
+<ul>
+<li><a href='#make'><code>make</code></a> Turns a makefile into a working Drupal codebase.</li>
 
-&lt;li&gt;&lt;a href='#site-set'&gt;&lt;code&gt;site-set&lt;/code&gt;&lt;/a&gt; Set a site alias to work on that will persist for the current session.&lt;/li&gt;
+<li><a href='#make-generate'><code>make-generate</code></a> Generate a makefile from the current Drupal site.</li>
+</ul>
 
-&lt;li&gt;&lt;a href='#site-ssh'&gt;&lt;code&gt;site-ssh&lt;/code&gt;&lt;/a&gt; Connect to a Drupal site&amp;#8217;s server via SSH for an interactive session or to run a shell command&lt;/li&gt;
+<h3 id='global_options_see_drush_topic_coreglobaloptions_for_the_full_list'>Global Options (see `drush topic core-global-options` for the full list)</h3>
 
-&lt;li&gt;&lt;a href='#test-clean'&gt;&lt;code&gt;test-clean&lt;/code&gt;&lt;/a&gt; Clean temporary tables and files.&lt;/li&gt;
+<ul>
+<li><code>-r \&lt;path\&gt;, --root=\&lt;path\&gt;                                        Drupal root directory to use (default: current directory).</code></li>
 
-&lt;li&gt;&lt;a href='#test-run'&gt;&lt;code&gt;test-run&lt;/code&gt;&lt;/a&gt; Run tests. Note that you must use the &amp;#8211;uri option.&lt;/li&gt;
+<li><code>-l \&lt;http://example.com:8888\&gt;, --uri=\&lt;http://example.com:8888\&gt;</code> URI of the drupal site to use (only needed in multisite environments or when running on an alternate port).</li>
 
-&lt;li&gt;&lt;a href='#updatedb'&gt;&lt;code&gt;updatedb&lt;/code&gt;&lt;/a&gt; Apply any database updates required (as with running update.php).&lt;/li&gt;
+<li><code>-v, --verbose</code> Display extra information about the command.</li>
 
-&lt;li&gt;&lt;a href='#usage-send'&gt;&lt;code&gt;usage-send&lt;/code&gt;&lt;/a&gt; Send anonymous Drush usage information to statistics logging site. Usage statistics contain the Drush command name and the Drush option names, but no arguments or option values.&lt;/li&gt;
+<li><code>-d, --debug</code> Display even more information, including internal messages.</li>
 
-&lt;li&gt;&lt;a href='#usage-show'&gt;&lt;code&gt;usage-show&lt;/code&gt;&lt;/a&gt; Show Drush usage information that has been logged but not sent. Usage statistics contain the Drush command name and the Drush option names, but no arguments or option values.&lt;/li&gt;
+<li><code>-y, --yes</code> Assume &#8216;yes&#8217; as answer to all prompts.</li>
 
-&lt;li&gt;&lt;a href='#variable-delete'&gt;&lt;code&gt;variable-delete&lt;/code&gt;&lt;/a&gt; Delete a variable.&lt;/li&gt;
+<li><code>-n, --no</code> Assume &#8216;no&#8217; as answer to all prompts.</li>
 
-&lt;li&gt;&lt;a href='#variable-get'&gt;&lt;code&gt;variable-get&lt;/code&gt;&lt;/a&gt; Get a list of some or all site variables and values.&lt;/li&gt;
+<li><code>-s, --simulate</code> Simulate all relevant actions (don&#8217;t actually change the system).</li>
 
-&lt;li&gt;&lt;a href='#variable-set'&gt;&lt;code&gt;variable-set&lt;/code&gt;&lt;/a&gt; Set a variable.&lt;/li&gt;
+<li><code>-p, --pipe</code> Emit a compact representation of the command for scripting.</li>
 
-&lt;li&gt;&lt;a href='#version'&gt;&lt;code&gt;version&lt;/code&gt;&lt;/a&gt; Show drush version.&lt;/li&gt;
+<li><code>-h, --help</code> This help system.</li>
 
-&lt;li&gt;&lt;a href='#watchdog-delete'&gt;&lt;code&gt;watchdog-delete&lt;/code&gt;&lt;/a&gt; Delete watchdog messages.&lt;/li&gt;
+<li><code>--version</code> Show drush version.</li>
 
-&lt;li&gt;&lt;a href='#watchdog-list'&gt;&lt;code&gt;watchdog-list&lt;/code&gt;&lt;/a&gt; Show available message types and severity levels. A prompt will ask for a choice to show watchdog messages.&lt;/li&gt;
+<li><code>--php=\&lt;/path/to/file\&gt;</code> The absolute path to your PHP intepreter, if not &#8216;php&#8217; in the path.</li>
 
-&lt;li&gt;&lt;a href='#watchdog-show'&gt;&lt;code&gt;watchdog-show&lt;/code&gt;&lt;/a&gt; Show watchdog messages.&lt;/li&gt;
-&lt;/ul&gt;
+<li><code>-ia, --interactive</code> Force interactive mode for commands run on multiple targets (e.g. `drush @site1,@site2 cc &#8211;ia`).</li>
+</ul>
 
-&lt;h3 id='runserver_commands'&gt;Runserver commands&lt;/h3&gt;
+<h3 id='command_detail'>Command detail</h3>
 
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='#runserver'&gt;&lt;code&gt;runserver&lt;/code&gt;&lt;/a&gt; Runs a lightweight built in http server for development.&lt;/li&gt;
-&lt;/ul&gt;
+<p>archive-dump</p>
 
-&lt;h3 id='field_commands'&gt;Field commands&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='#field-clone'&gt;&lt;code&gt;field-clone&lt;/code&gt;&lt;/a&gt; Clone a field and all its instances.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#field-create'&gt;&lt;code&gt;field-create&lt;/code&gt;&lt;/a&gt; Create fields and instances. Returns urls for field editing.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#field-delete'&gt;&lt;code&gt;field-delete&lt;/code&gt;&lt;/a&gt; Delete a field and its instances.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#field-info'&gt;&lt;code&gt;field-info&lt;/code&gt;&lt;/a&gt; View information about fields, field_types, and widgets.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#field-update'&gt;&lt;code&gt;field-update&lt;/code&gt;&lt;/a&gt; Return URL for field editing web page.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id='project_manager_commands'&gt;Project manager commands&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='#pm-disable'&gt;&lt;code&gt;pm-disable&lt;/code&gt;&lt;/a&gt; Disable one or more extensions (modules or themes).&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#pm-download'&gt;&lt;code&gt;pm-download&lt;/code&gt;&lt;/a&gt; Download projects from drupal.org or other sources.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#pm-enable'&gt;&lt;code&gt;pm-enable&lt;/code&gt;&lt;/a&gt; Enable one or more extensions (modules or themes).&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#pm-info'&gt;&lt;code&gt;pm-info&lt;/code&gt;&lt;/a&gt; Show detailed info for one or more extensions (modules or themes).&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#pm-list'&gt;&lt;code&gt;pm-list&lt;/code&gt;&lt;/a&gt; Show a list of available extensions (modules and themes).&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#pm-refresh'&gt;&lt;code&gt;pm-refresh&lt;/code&gt;&lt;/a&gt; Refresh update status information.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#pm-releasenotes'&gt;&lt;code&gt;pm-releasenotes&lt;/code&gt;&lt;/a&gt; Print release notes for given projects.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#pm-releases'&gt;&lt;code&gt;pm-releases&lt;/code&gt;&lt;/a&gt; Print release information for given projects.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#pm-uninstall'&gt;&lt;code&gt;pm-uninstall&lt;/code&gt;&lt;/a&gt; Uninstall one or more modules.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#pm-update'&gt;&lt;code&gt;pm-update&lt;/code&gt;&lt;/a&gt; Update Drupal core and contrib projects and apply any pending database updates (Same as pm-updatecode + updatedb).&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#pm-updatecode'&gt;&lt;code&gt;pm-updatecode&lt;/code&gt;&lt;/a&gt; Update Drupal core and contrib projects to latest recommended releases.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id='sql_commands'&gt;SQL commands&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='#sql-cli'&gt;&lt;code&gt;sql-cli&lt;/code&gt;&lt;/a&gt; Open a SQL command-line interface using Drupal&amp;#8217;s credentials.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#sql-connect'&gt;&lt;code&gt;sql-connect&lt;/code&gt;&lt;/a&gt; A string for connecting to the DB.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#sql-create'&gt;&lt;code&gt;sql-create&lt;/code&gt;&lt;/a&gt; Create a database.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#sql-drop'&gt;&lt;code&gt;sql-drop&lt;/code&gt;&lt;/a&gt; Drop all tables in a given database.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#sql-dump'&gt;&lt;code&gt;sql-dump&lt;/code&gt;&lt;/a&gt; Exports the Drupal DB as SQL using mysqldump or equivalent.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#sql-query'&gt;&lt;code&gt;sql-query&lt;/code&gt;&lt;/a&gt; Execute a query against the site database.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#sql-sync'&gt;&lt;code&gt;sql-sync&lt;/code&gt;&lt;/a&gt; Copy and import source database to target database. Transfers via rsync.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id='user_commands'&gt;User commands&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='#user-add-role'&gt;&lt;code&gt;user-add-role&lt;/code&gt;&lt;/a&gt; Add a role to the specified user accounts.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#user-block'&gt;&lt;code&gt;user-block&lt;/code&gt;&lt;/a&gt; Block the specified user(s).&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#user-cancel'&gt;&lt;code&gt;user-cancel&lt;/code&gt;&lt;/a&gt; Cancel a user account with the specified name.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#user-create'&gt;&lt;code&gt;user-create&lt;/code&gt;&lt;/a&gt; Create a user account with the specified name.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#user-information'&gt;&lt;code&gt;user-information&lt;/code&gt;&lt;/a&gt; Print information about the specified user(s).&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#user-login'&gt;&lt;code&gt;user-login&lt;/code&gt;&lt;/a&gt; Display a one time login link for the given user account (defaults to uid 1).&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#user-password'&gt;&lt;code&gt;user-password&lt;/code&gt;&lt;/a&gt; (Re)Set the password for the user account with the specified name.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#user-remove-role'&gt;&lt;code&gt;user-remove-role&lt;/code&gt;&lt;/a&gt; Remove a role from the specified user accounts.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#user-unblock'&gt;&lt;code&gt;user-unblock&lt;/code&gt;&lt;/a&gt; Unblock the specified user(s).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id='other_commands'&gt;Other commands&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href='#make'&gt;&lt;code&gt;make&lt;/code&gt;&lt;/a&gt; Turns a makefile into a working Drupal codebase.&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='#make-generate'&gt;&lt;code&gt;make-generate&lt;/code&gt;&lt;/a&gt; Generate a makefile from the current Drupal site.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id='global_options_see_drush_topic_coreglobaloptions_for_the_full_list'&gt;Global Options (see `drush topic core-global-options` for the full list)&lt;/h3&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-r \&amp;lt;path\&amp;gt;, --root=\&amp;lt;path\&amp;gt;                                        Drupal root directory to use (default: current directory).&lt;/code&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;-l \&amp;lt;http://example.com:8888\&amp;gt;, --uri=\&amp;lt;http://example.com:8888\&amp;gt;&lt;/code&gt; URI of the drupal site to use (only needed in multisite environments or when running on an alternate port).&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;-v, --verbose&lt;/code&gt; Display extra information about the command.&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;-d, --debug&lt;/code&gt; Display even more information, including internal messages.&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;-y, --yes&lt;/code&gt; Assume &amp;#8216;yes&amp;#8217; as answer to all prompts.&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;-n, --no&lt;/code&gt; Assume &amp;#8216;no&amp;#8217; as answer to all prompts.&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;-s, --simulate&lt;/code&gt; Simulate all relevant actions (don&amp;#8217;t actually change the system).&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;-p, --pipe&lt;/code&gt; Emit a compact representation of the command for scripting.&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;-h, --help&lt;/code&gt; This help system.&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;--version&lt;/code&gt; Show drush version.&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;--php=\&amp;lt;/path/to/file\&amp;gt;&lt;/code&gt; The absolute path to your PHP intepreter, if not &amp;#8216;php&amp;#8217; in the path.&lt;/li&gt;
-
-&lt;li&gt;&lt;code&gt;-ia, --interactive&lt;/code&gt; Force interactive mode for commands run on multiple targets (e.g. `drush @site1,@site2 cc &amp;#8211;ia`).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id='command_detail'&gt;Command detail&lt;/h3&gt;
-
-&lt;p&gt;archive-dump&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;Backup your code, files, and database into a single file.
+<pre><code>Backup your code, files, and database into a single file.
 
 Examples:
  drush archive-dump                        Write an archive containing 3 sites in it.
@@ -377,10 +344,10 @@ Examples:
  drush archive-dump default                Save archive to custom location.
  --destination=/backups/mysite.tar
  drush archive-dump                        Omits any .git directories found in the tree as well as
- --tar-options=&amp;quot;--exclude=.git             sites/default/files.
- --exclude=sites/default/files&amp;quot;
+ --tar-options=&quot;--exclude=.git             sites/default/files.
+ --exclude=sites/default/files&quot;
  drush archive-dump                        Placeholder %files is replaced with the real path for
- --tar-options=&amp;quot;--exclude=%files&amp;quot;          the current site, and that path is excluded.
+ --tar-options=&quot;--exclude=%files&quot;          the current site, and that path is excluded.
 
 
 Arguments:
@@ -395,24 +362,24 @@ Options:
                                            drush-backups directory and a filename will be
                                            generated.
  --generator                               The generator name to store in the MANIFEST file. The
-                                           default is &amp;quot;Drush archive-dump&amp;quot;.
+                                           default is &quot;Drush archive-dump&quot;.
  --generatorversion                        The generator version number to store in the MANIFEST
                                            file. The default is 5.7.
  --overwrite                               Do not fail if the destination file exists; overwrite it
                                            instead.
  --pipe                                    Only print the destination of the archive. Useful for
-                                           scripts that don&amp;#39;t pass --destination.
+                                           scripts that don&#39;t pass --destination.
  --preserve-symlinks                       Preserve symbolic links.
  --tags                                    Add tags to the archive manifest. Delimit multiple by
                                            commas.
  --tar-options                             Options passed thru to the tar command.
 
 
-Aliases: ard, archive-backup, arb&lt;/code&gt;&lt;/pre&gt;
+Aliases: ard, archive-backup, arb</code></pre>
 
-&lt;p&gt;archive-restore&lt;/p&gt;
+<p>archive-restore</p>
 
-&lt;pre&gt;&lt;code&gt;Expand a site archive into a Drupal web site.
+<pre><code>Expand a site archive into a Drupal web site.
 
 Examples:
  drush archive-restore ./example.tar.gz    Restore the files and databases for all sites in the
@@ -436,7 +403,7 @@ Arguments:
 Options:
  --db-prefix                               An optional table prefix to use during restore.
  --db-su                                   Account to use when creating the new database. Optional.
- --db-su-pw                                Password for the &amp;quot;db-su&amp;quot; account. Optional.
+ --db-su-pw                                Password for the &quot;db-su&quot; account. Optional.
  --db-url                                  A Drupal 6 style database URL indicating the target for
                                            database restore. If not provided, the archived
                                            settings.php is used.
@@ -446,28 +413,28 @@ Options:
  --overwrite                               Allow drush to overwrite any files in the destination.
 
 
-Aliases: arr&lt;/code&gt;&lt;/pre&gt;
+Aliases: arr</code></pre>
 
-&lt;p&gt;cache-clear&lt;/p&gt;
+<p>cache-clear</p>
 
-&lt;pre&gt;&lt;code&gt;Clear a specific cache, or all drupal caches.
+<pre><code>Clear a specific cache, or all drupal caches.
 
 Arguments:
  type                                      The particular cache to clear. Omit this argument to
                                            choose from available caches.
 
 
-Aliases: cc&lt;/code&gt;&lt;/pre&gt;
+Aliases: cc</code></pre>
 
-&lt;p&gt;cache-get&lt;/p&gt;
+<p>cache-get</p>
 
-&lt;pre&gt;&lt;code&gt;Fetch a cached object and display it.
+<pre><code>Fetch a cached object and display it.
 
 Examples:
- drush cache-get schema                    Display the data for the cache id &amp;quot;schema&amp;quot; from the
-                                           &amp;quot;cache&amp;quot; bin.
+ drush cache-get schema                    Display the data for the cache id &quot;schema&quot; from the
+                                           &quot;cache&quot; bin.
  drush cache-get                           Display the data for the cache id
- update_available_releases update          &amp;quot;update_available_releases&amp;quot; from the &amp;quot;update&amp;quot; bin.
+ update_available_releases update          &quot;update_available_releases&quot; from the &quot;update&quot; bin.
 
 
 Arguments:
@@ -476,19 +443,19 @@ Arguments:
 
 
 Options:
- --format                                  Format to output the object. Use &amp;quot;print_r&amp;quot; for print_r
-                                           (default), &amp;quot;export&amp;quot; for var_export, and &amp;quot;json&amp;quot; for JSON.
+ --format                                  Format to output the object. Use &quot;print_r&quot; for print_r
+                                           (default), &quot;export&quot; for var_export, and &quot;json&quot; for JSON.
 
 
-Aliases: cg&lt;/code&gt;&lt;/pre&gt;
+Aliases: cg</code></pre>
 
-&lt;p&gt;cache-set&lt;/p&gt;
+<p>cache-set</p>
 
-&lt;pre&gt;&lt;code&gt;Cache an object expressed in JSON or var_export() format.
+<pre><code>Cache an object expressed in JSON or var_export() format.
 
 Arguments:
  cid                                       The id of the object to set.
- data                                      The object to set in the cache. Use &amp;#39;-&amp;#39; to read the
+ data                                      The object to set in the cache. Use &#39;-&#39; to read the
                                            object from STDIN.
  bin                                       Optional. The cache bin to store the object in.
  expire                                    Optional. CACHE_PERMANENT, CACHE_TEMPORARY, or a Unix
@@ -497,17 +464,17 @@ Arguments:
 
 Options:
  --cache-get                               If the object is the result a previous fetch from the
-                                           cache, only store the value in the &amp;quot;data&amp;quot; property of
+                                           cache, only store the value in the &quot;data&quot; property of
                                            the object in the cache.
- --format                                  Format to parse the object. Use &amp;quot;string&amp;quot; for string
-                                           (default), and &amp;quot;json&amp;quot; for JSON.
+ --format                                  Format to parse the object. Use &quot;string&quot; for string
+                                           (default), and &quot;json&quot; for JSON.
 
 
-Aliases: cs&lt;/code&gt;&lt;/pre&gt;
+Aliases: cs</code></pre>
 
-&lt;p&gt;core-config&lt;/p&gt;
+<p>core-config</p>
 
-&lt;pre&gt;&lt;code&gt;Edit drushrc, site alias, and Drupal settings.php files.
+<pre><code>Edit drushrc, site alias, and Drupal settings.php files.
 
 Examples:
  drush core-config                         Pick from a list of config/alias/settings files. Open
@@ -530,17 +497,17 @@ Options:
                                            such as `vi` that run in the terminal.
 
 
-Aliases: conf, config&lt;/code&gt;&lt;/pre&gt;
+Aliases: conf, config</code></pre>
 
-&lt;p&gt;core-cron&lt;/p&gt;
+<p>core-cron</p>
 
-&lt;pre&gt;&lt;code&gt;Run all cron hooks in all active modules for specified site.
+<pre><code>Run all cron hooks in all active modules for specified site.
 
-Aliases: cron&lt;/code&gt;&lt;/pre&gt;
+Aliases: cron</code></pre>
 
-&lt;p&gt;core-execute&lt;/p&gt;
+<p>core-execute</p>
 
-&lt;pre&gt;&lt;code&gt;Execute a shell command. Usually used with a site alias.
+<pre><code>Execute a shell command. Usually used with a site alias.
 
 Examples:
  drush core-execute git pull origin  Retrieve latest code from git
@@ -555,15 +522,15 @@ Options:
  --escaped                                 Command string already escaped; do not add additional
                                            quoting.
  --ssh-options                             A string of extra options that will be passed to the ssh
-                                           command (e.g. &amp;quot;-p 100&amp;quot;)
+                                           command (e.g. &quot;-p 100&quot;)
  --tty                                     Create a tty (e.g. to run an interactive program).
 
 
-Aliases: exec, execute&lt;/code&gt;&lt;/pre&gt;
+Aliases: exec, execute</code></pre>
 
-&lt;p&gt;core-quick-drupal&lt;/p&gt;
+<p>core-quick-drupal</p>
 
-&lt;pre&gt;&lt;code&gt;Download, install, serve and login to Drupal with minimal configuration and dependencies.
+<pre><code>Download, install, serve and login to Drupal with minimal configuration and dependencies.
 
 Examples:
  drush qd                                  Download and install stable release of Drupal into a
@@ -572,9 +539,9 @@ Examples:
  drush qd --profile=minimal --dev --cache  Fire up dev release of Drupal site with minimal install
  --core=drupal-8.x --yes                   profile.
  drush qd testsite devel                   Fire up stable release (using the cache) of Drupal site
- --server=:8081/admin --browser=firefox    called &amp;quot;testsite&amp;quot;, download and enable devel module,
+ --server=:8081/admin --browser=firefox    called &quot;testsite&quot;, download and enable devel module,
  --cache --yes                             start a server on port 8081 and open /admin in firefox.
- drush qd commercesite                     Download and install the &amp;quot;Commerce Kickstart&amp;quot;
+ drush qd commercesite                     Download and install the &quot;Commerce Kickstart&quot;
  --core=commerce_kickstart                 distribution/install profile, display watchdog messages
  --profile=commerce_kickstart --cache      on the server console.
  --yes --watchdog
@@ -583,7 +550,7 @@ Examples:
 Arguments:
  site                                      Short name for the site to be created - used as a
                                            directory name and as sqlite file name. Optional - if
-                                           omitted timestamped &amp;quot;quick-drupal&amp;quot; directory will be
+                                           omitted timestamped &quot;quick-drupal&quot; directory will be
                                            used instead.
  projects                                  A list of projects to download into the new site. If
                                            projects contain extensions (modules or themes) with the
@@ -601,11 +568,11 @@ Options:
  --browser                                 Runserver option: If opening a web browser, which
                                            browser to user (defaults to operating system default).
  --cache                                   Cache release XML and tarballs or git clones. Git clones
-                                           use git&amp;#39;s --reference option.
+                                           use git&#39;s --reference option.
    --cache-duration-releasexml             Expire duration (in seconds) for release XML. Defaults
                                            to 86400 (24 hours).
  --clean-url                               Site install option: Defaults to 1
- --core                                    Drupal core to download. Defaults to &amp;quot;drupal&amp;quot; (latest
+ --core                                    Drupal core to download. Defaults to &quot;drupal&quot; (latest
                                            stable version).
  --db-prefix                               Site install option: An optional table prefix to use for
                                            initial install.  Can be a key-value array of
@@ -614,7 +581,7 @@ Options:
  --db-su                                   Site install option: Account to use when creating a new
                                            database. Must have Grant permission (mysql only).
                                            Optional.
- --db-su-pw                                Site install option: Password for the &amp;quot;db-su&amp;quot; account.
+ --db-su-pw                                Site install option: Password for the &quot;db-su&quot; account.
                                            Optional.
  --db-url                                  Site install option: A Drupal 6 style database URL. Only
                                            required for initial install - not re-install.
@@ -647,8 +614,8 @@ Options:
    --all                                   Shows all available releases instead of a short list of
                                            recent releases.
  --server                                  Runserver option: Which http server to use - either:
-                                           &amp;quot;cgi&amp;quot; for a CGI based httpserver (default, requires php
-                                           5.3 and php-cgi binary) or &amp;quot;builtin&amp;quot; for php 5.4 built
+                                           &quot;cgi&quot; for a CGI based httpserver (default, requires php
+                                           5.3 and php-cgi binary) or &quot;builtin&quot; for php 5.4 built
                                            in http server.
  --site-mail                               Site install option: From: for system mailings. Defaults
                                            to admin@example.com
@@ -667,7 +634,7 @@ Options:
                                            a time). Comma delimited list of name=value pairs (or
                                            array in drushrc).
  --variant                                 Download option: Only useful for install profiles.
-                                           Possible values: &amp;#39;full&amp;#39;, &amp;#39;projects&amp;#39;, &amp;#39;profile-only&amp;#39;.
+                                           Possible values: &#39;full&#39;, &#39;projects&#39;, &#39;profile-only&#39;.
  --package-handler=git_drupalorg           Use git.drupal.org to checkout and update projects.
    --gitusername                           Your git username as shown on user/[uid]/edit/git.
                                            Typically, this is set this in drushrc.php. Omitting
@@ -707,45 +674,45 @@ Options:
                                            also using the --svnsync option.
      --svnmessage                          Override default commit message which is: Drush
                                            automatic commit:
-   --svnstatusparams                       Add options to the &amp;#39;svn status&amp;#39; command
+   --svnstatusparams                       Add options to the &#39;svn status&#39; command
    --svnaddparams                          Add options to the `svn add` command
    --svnremoveparams                       Add options to the `svn remove` command
    --svnrevertparams                       Add options to the `svn revert` command
    --svncommitparams                       Add options to the `svn commit` command
 
 
-Aliases: qd&lt;/code&gt;&lt;/pre&gt;
+Aliases: qd</code></pre>
 
-&lt;p&gt;core-requirements&lt;/p&gt;
+<p>core-requirements</p>
 
-&lt;pre&gt;&lt;code&gt;Provides information about things that may be wrong in your Drupal installation, if any.
+<pre><code>Provides information about things that may be wrong in your Drupal installation, if any.
 
 Examples:
  drush core-requirements                   Show all status lines from the Status Report admin page.
  drush core-requirements --severity=2      Show only the red lines from the Status Report admin
                                            page.
- drush core-requirements --pipe            Print out a short report in the format &amp;quot;identifier:
-                                           severity&amp;quot;, where severity 2=error, 1=warning, and
+ drush core-requirements --pipe            Print out a short report in the format &quot;identifier:
+                                           severity&quot;, where severity 2=error, 1=warning, and
                                            0/-1=OK
 
 
 Options:
  --ignore                                  Comma-separated list of requirements to remove from
                                            output. Run with --pipe to see key values to use.
- --severity=&amp;lt;3&amp;gt;                            Only show status report messages with a severity greater
+ --severity=&lt;3&gt;                            Only show status report messages with a severity greater
                                            than or equal to the specified value.
 
 
-Aliases: status-report, rq&lt;/code&gt;&lt;/pre&gt;
+Aliases: status-report, rq</code></pre>
 
-&lt;p&gt;core-rsync&lt;/p&gt;
+<p>core-rsync</p>
 
-&lt;pre&gt;&lt;code&gt;Rsync the Drupal tree to/from another server using ssh.
+<pre><code>Rsync the Drupal tree to/from another server using ssh.
 
 Examples:
  drush rsync @dev @stage                   Rsync Drupal root from dev to stage (one of which must
                                            be local).
- drush rsync ./ @stage:%files/img          Rsync all files in the current directory to the &amp;#39;img&amp;#39;
+ drush rsync ./ @stage:%files/img          Rsync all files in the current directory to the &#39;img&#39;
                                            directory in the file storage folder on stage.
 
 
@@ -761,15 +728,15 @@ Options:
                                            to rsync.  See rsync documentation.
  --exclude-conf                            Excludes settings.php from being rsynced.  Default.
  --exclude-files                           Exclude the files directory.
- --exclude-other-sites                     Exclude all directories in &amp;quot;sites/&amp;quot; except for
-                                           &amp;quot;sites/all&amp;quot; and the site directory for the site being
+ --exclude-other-sites                     Exclude all directories in &quot;sites/&quot; except for
+                                           &quot;sites/all&quot; and the site directory for the site being
                                            synced.  Note: if the site directory is different
                                            between the source and destination, use --exclude-sites
-                                           followed by &amp;quot;drush rsync @from:%site @to:%site&amp;quot;
+                                           followed by &quot;drush rsync @from:%site @to:%site&quot;
  --exclude-paths                           List of paths to exclude, seperated by : (Unix-based
                                            systems) or ; (Windows).
- --exclude-sites                           Exclude all directories in &amp;quot;sites/&amp;quot; except for
-                                           &amp;quot;sites/all&amp;quot;.
+ --exclude-sites                           Exclude all directories in &quot;sites/&quot; except for
+                                           &quot;sites/all&quot;.
  --include-conf                            Allow settings.php to be rsynced. Default is to exclude
                                            settings.php.
  --include-paths                           List of paths to include, seperated by : (Unix-based
@@ -780,11 +747,11 @@ Options:
                                            rsync -rultz.  Default is -akz.
 
 
-Aliases: rsync&lt;/code&gt;&lt;/pre&gt;
+Aliases: rsync</code></pre>
 
-&lt;p&gt;core-status&lt;/p&gt;
+<p>core-status</p>
 
-&lt;pre&gt;&lt;code&gt;Provides a birds-eye view of the current Drupal installation, if any.
+<pre><code>Provides a birds-eye view of the current Drupal installation, if any.
 
 Examples:
  drush core-status version                 Show all status lines that contain version information.
@@ -802,11 +769,11 @@ Options:
  --show-passwords                          Show database password.
 
 
-Aliases: status, st&lt;/code&gt;&lt;/pre&gt;
+Aliases: status, st</code></pre>
 
-&lt;p&gt;core-topic&lt;/p&gt;
+<p>core-topic</p>
 
-&lt;pre&gt;&lt;code&gt;Read detailed documentation on a given topic.
+<pre><code>Read detailed documentation on a given topic.
 
 Examples:
  drush topic                               Show all available topics.
@@ -819,11 +786,11 @@ Arguments:
                                            all topic descriptions (and names in parenthesis).
 
 
-Aliases: topic&lt;/code&gt;&lt;/pre&gt;
+Aliases: topic</code></pre>
 
-&lt;p&gt;drupal-directory&lt;/p&gt;
+<p>drupal-directory</p>
 
-&lt;pre&gt;&lt;code&gt;Return the filesystem path for modules/themes and other key folders.
+<pre><code>Return the filesystem path for modules/themes and other key folders.
 
 Examples:
  cd `drush dd devel`                       Navigate into the devel module directory
@@ -831,7 +798,7 @@ Examples:
  cd `drush dd files`                       Navigate to the files directory.
  drush dd @alias:%files                    Print the path to the files directory on the site
                                            @alias.
- edit `drush dd devel`/devel.module        Open devel module in your editor (customize &amp;#39;edit&amp;#39; for
+ edit `drush dd devel`/devel.module        Open devel module in your editor (customize &#39;edit&#39; for
                                            your editor)
 
 
@@ -843,15 +810,15 @@ Arguments:
 
 Options:
  --component                               The portion of the evaluated path to return.  Defaults
-                                           to &amp;#39;path&amp;#39;; &amp;#39;name&amp;#39; returns the site alias of the target.
+                                           to &#39;path&#39;; &#39;name&#39; returns the site alias of the target.
  --local                                   Reject any target that specifies a remote site.
 
 
-Aliases: dd&lt;/code&gt;&lt;/pre&gt;
+Aliases: dd</code></pre>
 
-&lt;p&gt;help&lt;/p&gt;
+<p>help</p>
 
-&lt;pre&gt;&lt;code&gt;Drush provides an extensive help system that describes both drush commands and topics of general
+<pre><code>Drush provides an extensive help system that describes both drush commands and topics of general
 interest.  Use `drush help --filter` to present a list of command categories to view, and `drush
 topic` for a list of topics that go more in-depth on how to use and extend drush.
 
@@ -874,11 +841,11 @@ Options:
  --pipe                                    A list of available commands, one per line.
  --sort                                    Sort commands in alphabetical order. drush waits for
                                            full bootstrap before printing any commands when this
-                                           option is used.&lt;/code&gt;&lt;/pre&gt;
+                                           option is used.</code></pre>
 
-&lt;p&gt;image-flush&lt;/p&gt;
+<p>image-flush</p>
 
-&lt;pre&gt;&lt;code&gt;Flush all derived images for a given style.
+<pre><code>Flush all derived images for a given style.
 
 Examples:
  drush image-flush                         Pick an image style and then delete its images.
@@ -893,30 +860,30 @@ Arguments:
 
 
 Options:
- --all                                     Flush all derived images&lt;/code&gt;&lt;/pre&gt;
+ --all                                     Flush all derived images</code></pre>
 
-&lt;p&gt;php-eval&lt;/p&gt;
+<p>php-eval</p>
 
-&lt;pre&gt;&lt;code&gt;Evaluate arbitrary php code after bootstrapping Drupal (if available).
+<pre><code>Evaluate arbitrary php code after bootstrapping Drupal (if available).
 
 Examples:
- drush php-eval &amp;quot;variable_set(&amp;#39;hello&amp;#39;,  Sets the hello variable using Drupal API.
- &amp;#39;world&amp;#39;);&amp;quot;
+ drush php-eval &quot;variable_set(&#39;hello&#39;,  Sets the hello variable using Drupal API.
+ &#39;world&#39;);&quot;
 
 
 Arguments:
  code                                      PHP code
 
 
-Aliases: eval, ev&lt;/code&gt;&lt;/pre&gt;
+Aliases: eval, ev</code></pre>
 
-&lt;p&gt;php-script&lt;/p&gt;
+<p>php-script</p>
 
-&lt;pre&gt;&lt;code&gt;Runs the given php script(s) after a full Drupal bootstrap. A useful alternative to eval command
-when your php is lengthy or you can&amp;#39;t be bothered to figure out bash quoting. If you plan to share a
-script with others, consider making a full drush command instead, since that&amp;#39;s more
+<pre><code>Runs the given php script(s) after a full Drupal bootstrap. A useful alternative to eval command
+when your php is lengthy or you can&#39;t be bothered to figure out bash quoting. If you plan to share a
+script with others, consider making a full drush command instead, since that&#39;s more
 self-documenting.  Drush provides commandline options to the script via
-drush_get_option(&amp;#39;option-name&amp;#39;), and commandline arguments can be accessed either via
+drush_get_option(&#39;option-name&#39;), and commandline arguments can be accessed either via
 drush_get_arguments(), which returns all arguments in an array, or drush_shift(), which removes the
 next argument from the list and returns it.
 
@@ -932,72 +899,72 @@ Examples:
                                            (Unix-based systems) or ; (Windows).
 
 
-Aliases: scr&lt;/code&gt;&lt;/pre&gt;
+Aliases: scr</code></pre>
 
-&lt;p&gt;queue-list&lt;/p&gt;
+<p>queue-list</p>
 
-&lt;pre&gt;&lt;code&gt;Returns a list of all defined queues
+<pre><code>Returns a list of all defined queues
 
 Options:
- --pipe                                    Return a comma delimited list of queues.&lt;/code&gt;&lt;/pre&gt;
+ --pipe                                    Return a comma delimited list of queues.</code></pre>
 
-&lt;p&gt;queue-run&lt;/p&gt;
+<p>queue-run</p>
 
-&lt;pre&gt;&lt;code&gt;Run Drupal queue workers. As opposed to &amp;quot;drush cron&amp;quot; that can only be run one at a time on a single
-site, &amp;quot;drush queue-run&amp;quot; can be invoked as many times as the server load allows.
+<pre><code>Run Drupal queue workers. As opposed to &quot;drush cron&quot; that can only be run one at a time on a single
+site, &quot;drush queue-run&quot; can be invoked as many times as the server load allows.
 
 Arguments:
  queue_name                                The name of the queue to run, as defined in either
-                                           hook_queue_info or hook_cron_queue_info.&lt;/code&gt;&lt;/pre&gt;
+                                           hook_queue_info or hook_cron_queue_info.</code></pre>
 
-&lt;p&gt;search-index&lt;/p&gt;
+<p>search-index</p>
 
-&lt;pre&gt;&lt;code&gt;Index the remaining search items without wiping the index.&lt;/code&gt;&lt;/pre&gt;
+<pre><code>Index the remaining search items without wiping the index.</code></pre>
 
-&lt;p&gt;search-reindex&lt;/p&gt;
+<p>search-reindex</p>
 
-&lt;pre&gt;&lt;code&gt;Force the search index to be rebuilt.
+<pre><code>Force the search index to be rebuilt.
 
 Options:
  --immediate                               Rebuild the index immediately, instead of waiting for
-                                           cron.&lt;/code&gt;&lt;/pre&gt;
+                                           cron.</code></pre>
 
-&lt;p&gt;search-status&lt;/p&gt;
+<p>search-status</p>
 
-&lt;pre&gt;&lt;code&gt;Show how many items remain to be indexed out of the total.
+<pre><code>Show how many items remain to be indexed out of the total.
 
 Options:
  --pipe                                    Display in the format remaining/total for processing by
-                                           scripts.&lt;/code&gt;&lt;/pre&gt;
+                                           scripts.</code></pre>
 
-&lt;p&gt;self-update&lt;/p&gt;
+<p>self-update</p>
 
-&lt;pre&gt;&lt;code&gt;Check to see if there is a newer Drush release available.
+<pre><code>Check to see if there is a newer Drush release available.
 
-Aliases: selfupdate&lt;/code&gt;&lt;/pre&gt;
+Aliases: selfupdate</code></pre>
 
-&lt;p&gt;shell-alias&lt;/p&gt;
+<p>shell-alias</p>
 
-&lt;pre&gt;&lt;code&gt;Print a shell alias record.
+<pre><code>Print a shell alias record.
 
 Examples:
  drush shell-alias                         List all alias records known to drush.
- drush shell-alias pull                    Print the value of the shell alias &amp;#39;pull&amp;#39;.
+ drush shell-alias pull                    Print the value of the shell alias &#39;pull&#39;.
 
 
 Arguments:
  alias                                     Shell alias to print
 
 
-Aliases: sha&lt;/code&gt;&lt;/pre&gt;
+Aliases: sha</code></pre>
 
-&lt;p&gt;site-alias&lt;/p&gt;
+<p>site-alias</p>
 
-&lt;pre&gt;&lt;code&gt;Print an alias record.
+<pre><code>Print an alias record.
 
 Examples:
  drush site-alias                          List all alias records known to drush.
- drush site-alias @dev                     Print an alias record for the alias &amp;#39;dev&amp;#39;.
+ drush site-alias @dev                     Print an alias record for the alias &#39;dev&#39;.
 
 
 Arguments:
@@ -1024,11 +991,11 @@ Options:
  --with-optional                           Include optional default items.
 
 
-Aliases: sa&lt;/code&gt;&lt;/pre&gt;
+Aliases: sa</code></pre>
 
-&lt;p&gt;site-install&lt;/p&gt;
+<p>site-install</p>
 
-&lt;pre&gt;&lt;code&gt;Install Drupal along with modules/themes/configuration using the specified install profile.
+<pre><code>Install Drupal along with modules/themes/configuration using the specified install profile.
 
 Examples:
  drush site-install expert --locale=uk     (Re)install using the expert install profile. Set
@@ -1049,7 +1016,7 @@ Examples:
 
 Arguments:
  profile                                   the install profile you wish to run. defaults to
-                                           &amp;#39;default&amp;#39; in D6, &amp;#39;standard&amp;#39; in D7+
+                                           &#39;default&#39; in D6, &#39;standard&#39; in D7+
  key=value...                              any additional settings you wish to pass to the profile.
                                            Fully supported on D7+, partially supported on D6
                                            (single step configure forms only). The key is in the
@@ -1068,27 +1035,27 @@ Options:
                                            file (not the command line).
  --db-su=                            Account to use when creating a new database. Must have
                                            Grant permission (mysql only). Optional.
- --db-su-pw=                         Password for the &amp;quot;db-su&amp;quot; account. Optional.
+ --db-su-pw=                         Password for the &quot;db-su&quot; account. Optional.
  --db-url=                                         install - not re-install.
  --locale=                          A short language code. Sets the default site language.
                                            Language files must already be present. You may use
                                            download command to get them.
  --site-mail                               From: for system mailings. Defaults to admin@example.com
  --site-name                               Defaults to Site-Install
- --sites-subdir=           Name of directory under &amp;#39;sites&amp;#39; which should be created.
+ --sites-subdir=           Name of directory under &#39;sites&#39; which should be created.
                                            Only needed when the subdirectory does not already
-                                           exist. Defaults to &amp;#39;default&amp;#39;
+                                           exist. Defaults to &#39;default&#39;
 
 
-Aliases: si&lt;/code&gt;&lt;/pre&gt;
+Aliases: si</code></pre>
 
-&lt;p&gt;site-reset&lt;/p&gt;
+<p>site-reset</p>
 
-&lt;pre&gt;&lt;code&gt;Reset a persistently set site.&lt;/code&gt;&lt;/pre&gt;
+<pre><code>Reset a persistently set site.</code></pre>
 
-&lt;p&gt;site-set&lt;/p&gt;
+<p>site-set</p>
 
-&lt;pre&gt;&lt;code&gt;Set a site alias to work on that will persist for the current session.
+<pre><code>Set a site alias to work on that will persist for the current session.
 
 Examples:
  drush site-set @dev                       Set the current session to use the @dev alias.
@@ -1098,18 +1065,18 @@ Examples:
 
 
 Arguments:
- site                                      Site specification to use, or &amp;quot;-&amp;quot; for previous site.
+ site                                      Site specification to use, or &quot;-&quot; for previous site.
 
 
-Aliases: use&lt;/code&gt;&lt;/pre&gt;
+Aliases: use</code></pre>
 
-&lt;p&gt;site-ssh&lt;/p&gt;
+<p>site-ssh</p>
 
-&lt;pre&gt;&lt;code&gt;Connect to a Drupal site&amp;#39;s server via SSH for an interactive session or to run a shell command
+<pre><code>Connect to a Drupal site&#39;s server via SSH for an interactive session or to run a shell command
 
 Examples:
- drush @mysite ssh                         Open an interactive shell on @mysite&amp;#39;s server.
- drush @prod ssh &amp;#39;ls /tmp&amp;#39;                 Run &amp;quot;ls /tmp&amp;quot; on @prod site. If @prod is a site list,
+ drush @mysite ssh                         Open an interactive shell on @mysite&#39;s server.
+ drush @prod ssh &#39;ls /tmp&#39;                 Run &quot;ls /tmp&quot; on @prod site. If @prod is a site list,
                                            then ls will be executed on each site.
 
 
@@ -1123,19 +1090,19 @@ Options:
  --escaped                                 Command string already escaped; do not add additional
                                            quoting.
  --ssh-options                             A string of extra options that will be passed to the ssh
-                                           command (e.g. &amp;quot;-p 100&amp;quot;)
+                                           command (e.g. &quot;-p 100&quot;)
  --tty                                     Create a tty (e.g. to run an interactive program).
 
 
-Aliases: ssh&lt;/code&gt;&lt;/pre&gt;
+Aliases: ssh</code></pre>
 
-&lt;p&gt;test-clean&lt;/p&gt;
+<p>test-clean</p>
 
-&lt;pre&gt;&lt;code&gt;Clean temporary tables and files.&lt;/code&gt;&lt;/pre&gt;
+<pre><code>Clean temporary tables and files.</code></pre>
 
-&lt;p&gt;test-run&lt;/p&gt;
+<p>test-run</p>
 
-&lt;pre&gt;&lt;code&gt;Run tests. Note that you must use the --uri option.
+<pre><code>Run tests. Note that you must use the --uri option.
 
 Examples:
  test-run                                  List all available classes and groups.
@@ -1145,8 +1112,8 @@ Examples:
  test-run XML-RPC                          Run all classes in a XML-RPC group.
  test-run XML-RPC,Filter                   Run all tests from multiple groups/classes.
  test-run XMLRPCBasicTestCase              Run particular methods in the specified class or group.
- --methods=&amp;quot;testListMethods,
- testInvalidMessageParsing&amp;quot;
+ --methods=&quot;testListMethods,
+ testInvalidMessageParsing&quot;
 
 
 Arguments:
@@ -1164,49 +1131,49 @@ Options:
                                            within the test class. Defaults to all methods.
  --xml                                     Output verbose test results to a specified directory
                                            using the JUnit test reporting format. Useful for
-                                           integrating with Jenkins.&lt;/code&gt;&lt;/pre&gt;
+                                           integrating with Jenkins.</code></pre>
 
-&lt;p&gt;updatedb&lt;/p&gt;
+<p>updatedb</p>
 
-&lt;pre&gt;&lt;code&gt;Apply any database updates required (as with running update.php).
+<pre><code>Apply any database updates required (as with running update.php).
 
-Aliases: updb&lt;/code&gt;&lt;/pre&gt;
+Aliases: updb</code></pre>
 
-&lt;p&gt;usage-send&lt;/p&gt;
+<p>usage-send</p>
 
-&lt;pre&gt;&lt;code&gt;Send anonymous Drush usage information to statistics logging site.  Usage statistics contain the
+<pre><code>Send anonymous Drush usage information to statistics logging site.  Usage statistics contain the
 Drush command name and the Drush option names, but no arguments or option values.
 
 Examples:
  drush usage-send                          Immediately send cached usage statistics.
- $options[&amp;#39;drush_usage_send&amp;#39;]  = TRUE;     Specify in a .drushrc.php file that usage information
+ $options[&#39;drush_usage_send&#39;]  = TRUE;     Specify in a .drushrc.php file that usage information
                                            should be sent.
- $options[&amp;#39;drush_usage_size&amp;#39;]  = 10240;    Specify the frequency (file size) that usage information
+ $options[&#39;drush_usage_size&#39;]  = 10240;    Specify the frequency (file size) that usage information
                                            should be sent.
 
 
-Aliases: usend&lt;/code&gt;&lt;/pre&gt;
+Aliases: usend</code></pre>
 
-&lt;p&gt;usage-show&lt;/p&gt;
+<p>usage-show</p>
 
-&lt;pre&gt;&lt;code&gt;Show Drush usage information that has been logged but not sent.  Usage statistics contain the Drush
+<pre><code>Show Drush usage information that has been logged but not sent.  Usage statistics contain the Drush
 command name and the Drush option names, but no arguments or option values.
 
 Examples:
  drush usage-show                          Show cached usage statistics.
- $options[&amp;#39;drush_usage_log&amp;#39;]  = TRUE;      Specify in a .drushrc.php file that usage information
+ $options[&#39;drush_usage_log&#39;]  = TRUE;      Specify in a .drushrc.php file that usage information
                                            should be logged locally in a usage statistics file.
 
 
-Aliases: ushow&lt;/code&gt;&lt;/pre&gt;
+Aliases: ushow</code></pre>
 
-&lt;p&gt;variable-delete&lt;/p&gt;
+<p>variable-delete</p>
 
-&lt;pre&gt;&lt;code&gt;Delete a variable.
+<pre><code>Delete a variable.
 
 Examples:
  drush vdel user_pictures                  Delete the user_pictures variable.
- drush vdel u                              Choose from a list of variables beginning with &amp;quot;u&amp;quot; to
+ drush vdel u                              Choose from a list of variables beginning with &quot;u&quot; to
                                            delete.
  drush vdel -y --exact maintenance_mode    Bring the site back online, skipping confirmation.
                                            Variable is rewritten to site_offline for Drupal 6.
@@ -1223,16 +1190,16 @@ Options:
  --yes                                     Skip confirmation if only one variable name matches.
 
 
-Aliases: vdel&lt;/code&gt;&lt;/pre&gt;
+Aliases: vdel</code></pre>
 
-&lt;p&gt;variable-get&lt;/p&gt;
+<p>variable-get</p>
 
-&lt;pre&gt;&lt;code&gt;Get a list of some or all site variables and values.
+<pre><code>Get a list of some or all site variables and values.
 
 Examples:
  drush vget                                List all variables and values.
- drush vget user                           List all variables containing the string &amp;quot;user&amp;quot;.
- drush vget site_mail --exact              Show the variable with the exact key &amp;quot;site_mail&amp;quot;.
+ drush vget user                           List all variables containing the string &quot;user&quot;.
+ drush vget site_mail --exact              Show the variable with the exact key &quot;site_mail&quot;.
 
 
 Arguments:
@@ -1243,17 +1210,17 @@ Arguments:
 Options:
  --exact                                   Only get the one variable that exactly matches the
                                            specified name.
- --format=                         Format to output the object. Use &amp;quot;print_r&amp;quot; for print_r
-                                           (default), &amp;quot;export&amp;quot; for var_export, and &amp;quot;json&amp;quot; for JSON.
+ --format=                         Format to output the object. Use &quot;print_r&quot; for print_r
+                                           (default), &quot;export&quot; for var_export, and &quot;json&quot; for JSON.
  --pipe                                    A synonym for --format=export. Useful for pasting into
                                            code.
 
 
-Aliases: vget&lt;/code&gt;&lt;/pre&gt;
+Aliases: vget</code></pre>
 
-&lt;p&gt;variable-set&lt;/p&gt;
+<p>variable-set</p>
 
-&lt;pre&gt;&lt;code&gt;Set a variable.
+<pre><code>Set a variable.
 
 Examples:
  drush vset --yes preprocess_css TRUE      Set the preprocess_css variable to true. Skip
@@ -1261,11 +1228,11 @@ Examples:
  drush vset --exact maintenance_mode 1     Take the site offline; skips confirmation even if
                                            maintenance_mode variable does not exist. Variable is
                                            rewritten to site_offline for Drupal 6.
- drush vset pr TRUE                        Choose from a list of variables beginning with &amp;quot;pr&amp;quot; to
+ drush vset pr TRUE                        Choose from a list of variables beginning with &quot;pr&quot; to
                                            set to (bool)true.
- php -r &amp;quot;print                             Set a variable to a complex value (e.g. array)
- json_encode(array(&amp;#39;drupal&amp;#39;,
- &amp;#39;simpletest&amp;#39;));&amp;quot;  | drush vset
+ php -r &quot;print                             Set a variable to a complex value (e.g. array)
+ json_encode(array(&#39;drupal&#39;,
+ &#39;simpletest&#39;));&quot;  | drush vset
  --format=json
  project_dependency_excluded_dependencies
  -
@@ -1274,39 +1241,39 @@ Examples:
 Arguments:
  name                                      The name of a variable or the first few letters of its
                                            name.
- value                                     The value to assign to the variable. Use &amp;#39;-&amp;#39; to read the
+ value                                     The value to assign to the variable. Use &#39;-&#39; to read the
                                            object from STDIN.
 
 
 Options:
  --exact                                   The exact name of the variable to set has been provided;
                                            do not prompt for similarly-named variables.
- --format=                        Format to parse the object. Use &amp;quot;auto&amp;quot; to detect format
-                                           from value (default), &amp;quot;string&amp;quot;, &amp;quot;integer&amp;quot; or &amp;quot;boolean&amp;quot;
-                                           for corresponding primitive type, and &amp;quot;json&amp;quot; for JSON.
+ --format=                        Format to parse the object. Use &quot;auto&quot; to detect format
+                                           from value (default), &quot;string&quot;, &quot;integer&quot; or &quot;boolean&quot;
+                                           for corresponding primitive type, and &quot;json&quot; for JSON.
  --yes                                     Skip confirmation if only one variable name matches.
 
 
-Aliases: vset&lt;/code&gt;&lt;/pre&gt;
+Aliases: vset</code></pre>
 
-&lt;p&gt;version&lt;/p&gt;
+<p>version</p>
 
-&lt;pre&gt;&lt;code&gt;Show drush version.
+<pre><code>Show drush version.
 
 Options:
  --pipe                                    Print just the version number, and nothing else.
  --self-update                             Check for pending updates to Drush itself. Set to 0 to
-                                           disable.&lt;/code&gt;&lt;/pre&gt;
+                                           disable.</code></pre>
 
-&lt;p&gt;watchdog-delete&lt;/p&gt;
+<p>watchdog-delete</p>
 
-&lt;pre&gt;&lt;code&gt;Delete watchdog messages. Arguments or options must be provided to specify which messages to delete.
+<pre><code>Delete watchdog messages. Arguments or options must be provided to specify which messages to delete.
 
 Examples:
  drush watchdog-delete all                 Delete all messages.
  drush watchdog-delete 64                  Delete messages with id 64.
- drush watchdog-delete &amp;quot;cron run           Delete messages containing the string &amp;quot;cron run
- succesful&amp;quot;                                succesful&amp;quot;.
+ drush watchdog-delete &quot;cron run           Delete messages containing the string &quot;cron run
+ succesful&quot;                                succesful&quot;.
  drush watchdog-delete --severity=notice   Delete all messages with a severity of notice.
  drush watchdog-delete --type=cron         Delete all messages of type cron.
 
@@ -1316,24 +1283,24 @@ Options:
  --type                                    Delete messages of a given type.
 
 
-Aliases: wd-del, wd-delete&lt;/code&gt;&lt;/pre&gt;
+Aliases: wd-del, wd-delete</code></pre>
 
-&lt;p&gt;watchdog-list&lt;/p&gt;
+<p>watchdog-list</p>
 
-&lt;pre&gt;&lt;code&gt;Show available message types and severity levels. A prompt will ask for a choice to show watchdog
+<pre><code>Show available message types and severity levels. A prompt will ask for a choice to show watchdog
 messages.
 
-Aliases: wd-list&lt;/code&gt;&lt;/pre&gt;
+Aliases: wd-list</code></pre>
 
-&lt;p&gt;watchdog-show&lt;/p&gt;
+<p>watchdog-show</p>
 
-&lt;pre&gt;&lt;code&gt;Show watchdog messages. Arguments and options can be combined to configure which messages to show.
+<pre><code>Show watchdog messages. Arguments and options can be combined to configure which messages to show.
 
 Examples:
  drush watchdog-show                       Show a listing of most recent 10 messages.
  drush watchdog-show 64                    Show in detail message with id 64.
- drush watchdog-show &amp;quot;cron run succesful&amp;quot;  Show a listing of most recent 10 messages containing the
-                                           string &amp;quot;cron run succesful&amp;quot;.
+ drush watchdog-show &quot;cron run succesful&quot;  Show a listing of most recent 10 messages containing the
+                                           string &quot;cron run succesful&quot;.
  drush watchdog-show --count=46            Show a listing of most recent 46 messages.
  drush watchdog-show --severity=notice     Show a listing of most recent 10 messages with a
                                            severity of notice.
@@ -1364,12 +1331,12 @@ Options:
  --type                                    Restrict to messages of a given type.
 
 
-Aliases: wd-show, ws&lt;/code&gt;&lt;/pre&gt;
+Aliases: wd-show, ws</code></pre>
 
-&lt;p&gt;runserver&lt;/p&gt;
+<p>runserver</p>
 
-&lt;pre&gt;&lt;code&gt;Runs a lightweight built in http server for development.
- - Don&amp;#39;t use this for production, it is neither scalable nor secure for this use.
+<pre><code>Runs a lightweight built in http server for development.
+ - Don&#39;t use this for production, it is neither scalable nor secure for this use.
  - If you run multiple servers simultaniously, you will need to assign each a unique port.
  - Use Ctrl-C or equivalent to stop the server when complete.
 
@@ -1378,7 +1345,7 @@ Examples:
  drush rs 10.0.0.28:80                     Start runserver on 10.0.0.28, port 80.
  drush rs --php-cgi=php5-cgi --dns         Start runserver on localhost (using rDNS to determine
  localhost:8888/user                       binding IP), port 8888, and open /user in browser. Use
-                                           &amp;quot;php5-cgi&amp;quot; as the php-cgi binary.
+                                           &quot;php5-cgi&quot; as the php-cgi binary.
  drush rs /                                Start runserver on default IP/port (127.0.0.1, port
                                            8888), and open / in browser.
  drush rs                                  Use a default (would be specified in your drushrc) that
@@ -1408,9 +1375,9 @@ Options:
  --php-cgi                                 Name of the php-cgi binary. If it is not on your current
                                            $PATH you should include the full path. You can include
                                            command line parameters to pass into php-cgi.
- --server                                  Which http server to use - either: &amp;quot;cgi&amp;quot; for a CGI based
+ --server                                  Which http server to use - either: &quot;cgi&quot; for a CGI based
                                            httpserver (default, requires php 5.3 and php-cgi
-                                           binary) or &amp;quot;builtin&amp;quot; for php 5.4 built in http server.
+                                           binary) or &quot;builtin&quot; for php 5.4 built in http server.
  --user                                    If opening a web browser, automatically log in as this
                                            user (user ID or username).
  --variables                               Key-value array of variables to override in the $conf
@@ -1421,14 +1388,14 @@ Options:
                                            drushrc).
 
 
-Aliases: rs&lt;/code&gt;&lt;/pre&gt;
+Aliases: rs</code></pre>
 
-&lt;p&gt;field-clone&lt;/p&gt;
+<p>field-clone</p>
 
-&lt;pre&gt;&lt;code&gt;Clone a field and all its instances.
+<pre><code>Clone a field and all its instances.
 
 Examples:
- field-clone tags labels                   Copy &amp;#39;tags&amp;#39; field into a new field &amp;#39;labels&amp;#39; field which
+ field-clone tags labels                   Copy &#39;tags&#39; field into a new field &#39;labels&#39; field which
                                            has same instances.
  open `field-clone tags labels`            Clone field and then open field edit forms for
                                            refinement.
@@ -1436,11 +1403,11 @@ Examples:
 
 Arguments:
  source_field_name                         Name of field that will be cloned
- target_field_name                         Name of new, cloned field.&lt;/code&gt;&lt;/pre&gt;
+ target_field_name                         Name of new, cloned field.</code></pre>
 
-&lt;p&gt;field-create&lt;/p&gt;
+<p>field-create</p>
 
-&lt;pre&gt;&lt;code&gt;Create fields and instances. Returns urls for field editing.
+<pre><code>Create fields and instances. Returns urls for field editing.
 
 Examples:
  drush field-create article                Define new article fields via interactive prompts.
@@ -1463,11 +1430,11 @@ Arguments:
 
 Options:
  --entity_type                             Type of entity (e.g. node, user, comment). Defaults to
-                                           node.&lt;/code&gt;&lt;/pre&gt;
+                                           node.</code></pre>
 
-&lt;p&gt;field-delete&lt;/p&gt;
+<p>field-delete</p>
 
-&lt;pre&gt;&lt;code&gt;Delete a field and its instances.
+<pre><code>Delete a field and its instances.
 
 Examples:
  field-delete city                         Delete the city field and any instances it might have.
@@ -1483,11 +1450,11 @@ Options:
                                            omitted, admin can choose to delete one instance or
                                            whole field.
  --entity_type                             Disambiguate a particular bundle from identically named
-                                           bundles. Usually not needed.&lt;/code&gt;&lt;/pre&gt;
+                                           bundles. Usually not needed.</code></pre>
 
-&lt;p&gt;field-info&lt;/p&gt;
+<p>field-info</p>
 
-&lt;pre&gt;&lt;code&gt;View information about fields, field_types, and widgets.
+<pre><code>View information about fields, field_types, and widgets.
 
 Examples:
  field-info types                          Show a table which lists all field types and their
@@ -1500,22 +1467,22 @@ Arguments:
 
 
 Options:
- --pipe                                    Return field information table as CSV.&lt;/code&gt;&lt;/pre&gt;
+ --pipe                                    Return field information table as CSV.</code></pre>
 
-&lt;p&gt;field-update&lt;/p&gt;
+<p>field-update</p>
 
-&lt;pre&gt;&lt;code&gt;Return URL for field editing web page.
+<pre><code>Return URL for field editing web page.
 
 Examples:
  field-update comment_body                 Quickly navigate to a field edit web page.
 
 
 Arguments:
- field_name                                Name of field that needs updating.&lt;/code&gt;&lt;/pre&gt;
+ field_name                                Name of field that needs updating.</code></pre>
 
-&lt;p&gt;pm-disable&lt;/p&gt;
+<p>pm-disable</p>
 
-&lt;pre&gt;&lt;code&gt;Disable one or more extensions (modules or themes). Disable dependant extensions as well.
+<pre><code>Disable one or more extensions (modules or themes). Disable dependant extensions as well.
 
 Arguments:
  extensions                                A list of modules or themes. You can use the * wildcard
@@ -1523,11 +1490,11 @@ Arguments:
                                            matches.
 
 
-Aliases: dis&lt;/code&gt;&lt;/pre&gt;
+Aliases: dis</code></pre>
 
-&lt;p&gt;pm-download&lt;/p&gt;
+<p>pm-download</p>
 
-&lt;pre&gt;&lt;code&gt;Download Drupal core or projects from drupal.org (Drupal core, modules, themes or profiles) and
+<pre><code>Download Drupal core or projects from drupal.org (Drupal core, modules, themes or profiles) and
 other sources. It will automatically figure out which project version you want based on its
 recommended release, or you may specify a particular version.
 
@@ -1535,7 +1502,7 @@ If no --destination is provided, then destination depends on the project type:
   - Profiles will be downloaded to profiles/ in your Drupal root.
   - Modules and themes will be downloaded to the site specific directory
 (sites/example.com/modules|themes) if available, or to sites/all/modules|themes.
-  - If you&amp;#39;re downloading drupal core or you are not running the command within a bootstrapped
+  - If you&#39;re downloading drupal core or you are not running the command within a bootstrapped
 drupal site, the default location is the current directory.
   - Drush commands will be relocated to /usr/share/drush/commands (if available) or ~/.drush.
 Relocation is determined once the project is downloaded by examining its content. Note you can
@@ -1559,23 +1526,23 @@ Examples:
 
 Arguments:
  projects                                  A comma delimited list of drupal.org project names, with
-                                           optional version. Defaults to &amp;#39;drupal&amp;#39;
+                                           optional version. Defaults to &#39;drupal&#39;
 
 
 Options:
  --cache                                   Cache release XML and tarballs or git clones. Git clones
-                                           use git&amp;#39;s --reference option.
+                                           use git&#39;s --reference option.
    --cache-duration-releasexml             Expire duration (in seconds) for release XML. Defaults
                                            to 86400 (24 hours).
- --default-major=&amp;lt;6&amp;gt;                       Specify the default major version of modules to download
+ --default-major=&lt;6&gt;                       Specify the default major version of modules to download
                                            when there is no bootstrapped Drupal site.  Defaults to
-                                           &amp;quot;7&amp;quot;.
- --destination=                      Path to which the project will be copied. If you&amp;#39;re
+                                           &quot;7&quot;.
+ --destination=                      Path to which the project will be copied. If you&#39;re
                                            providing a relative path, note it is relative to the
                                            drupal root (if bootstrapped).
  --dev                                     Work with development releases solely.
- --drupal-project-rename                   Alternate name for &amp;quot;drupal-x.y&amp;quot; directory when
-                                           downloading Drupal project. Defaults to &amp;quot;drupal&amp;quot;.
+ --drupal-project-rename                   Alternate name for &quot;drupal-x.y&quot; directory when
+                                           downloading Drupal project. Defaults to &quot;drupal&quot;.
  --notes                                   Show release notes after each project is downloaded.
  --pipe                                    Returns a list of the names of the extensions (modules
                                            and themes) contained in the downloaded projects.
@@ -1588,10 +1555,10 @@ Options:
                                            XML. Defaults to
                                            http://updates.drupal.org/release-history.
  --use-site-dir                            Force to use the site specific directory. It will create
-                                           the directory if it doesn&amp;#39;t exist. If --destination is
+                                           the directory if it doesn&#39;t exist. If --destination is
                                            also present this option will be ignored.
  --variant=                          Only useful for install profiles. Possible values:
-                                           &amp;#39;full&amp;#39;, &amp;#39;projects&amp;#39;, &amp;#39;profile-only&amp;#39;.
+                                           &#39;full&#39;, &#39;projects&#39;, &#39;profile-only&#39;.
  --package-handler=wget                    Default package_handler engine. Download project
                                            packages using wget or curl.
  --package-handler=git_drupalorg           Use git.drupal.org to checkout and update projects.
@@ -1616,7 +1583,7 @@ Options:
                                            also using the --svnsync option.
      --svnmessage                          Override default commit message which is: Drush
                                            automatic commit:
-   --svnstatusparams                       Add options to the &amp;#39;svn status&amp;#39; command
+   --svnstatusparams                       Add options to the &#39;svn status&#39; command
    --svnaddparams                          Add options to the `svn add` command
    --svnremoveparams                       Add options to the `svn remove` command
    --svnrevertparams                       Add options to the `svn revert` command
@@ -1638,11 +1605,11 @@ Options:
                                            automatic commit. Project   Command:
 
 
-Aliases: dl&lt;/code&gt;&lt;/pre&gt;
+Aliases: dl</code></pre>
 
-&lt;p&gt;pm-enable&lt;/p&gt;
+<p>pm-enable</p>
 
-&lt;pre&gt;&lt;code&gt;Enable one or more extensions (modules or themes). Enable dependant extensions as well.
+<pre><code>Enable one or more extensions (modules or themes). Enable dependant extensions as well.
 
 Arguments:
  extensions                                A list of modules or themes. You can use the * wildcard
@@ -1656,11 +1623,11 @@ Options:
  --skip                                    Skip automatic downloading of libraries (c.f. devel).
 
 
-Aliases: en&lt;/code&gt;&lt;/pre&gt;
+Aliases: en</code></pre>
 
-&lt;p&gt;pm-info&lt;/p&gt;
+<p>pm-info</p>
 
-&lt;pre&gt;&lt;code&gt;Show detailed info for one or more extensions (modules or themes).
+<pre><code>Show detailed info for one or more extensions (modules or themes).
 
 Arguments:
  extensions                                A list of modules or themes. You can use the * wildcard
@@ -1669,38 +1636,38 @@ Arguments:
                                            for all available extensions.
 
 
-Aliases: pmi&lt;/code&gt;&lt;/pre&gt;
+Aliases: pmi</code></pre>
 
-&lt;p&gt;pm-list&lt;/p&gt;
+<p>pm-list</p>
 
-&lt;pre&gt;&lt;code&gt;Show a list of available extensions (modules and themes).
+<pre><code>Show a list of available extensions (modules and themes).
 
 Options:
  --core                                    Filter out extensions that are not in drupal core.
  --no-core                                 Filter out extensions that are provided by drupal core.
  --package                                 Filter by project packages. You can use multiple comma
-                                           separated values. (i.e. --package=&amp;quot;Core -
-                                           required,Other&amp;quot;).
+                                           separated values. (i.e. --package=&quot;Core -
+                                           required,Other&quot;).
  --pipe                                    Returns a whitespace delimited list of the names of the
                                            resulting extensions.
  --status=                       Filter by extension status. Choices: enabled, disabled
-                                           and/or &amp;#39;not installed&amp;#39;. You can use multiple comma
-                                           separated values. (i.e. --status=&amp;quot;disabled,not
-                                           installed&amp;quot;).
+                                           and/or &#39;not installed&#39;. You can use multiple comma
+                                           separated values. (i.e. --status=&quot;disabled,not
+                                           installed&quot;).
  --type=                           Filter by extension type. Choices: module, theme.
 
 
-Aliases: pml&lt;/code&gt;&lt;/pre&gt;
+Aliases: pml</code></pre>
 
-&lt;p&gt;pm-refresh&lt;/p&gt;
+<p>pm-refresh</p>
 
-&lt;pre&gt;&lt;code&gt;Refresh update status information.
+<pre><code>Refresh update status information.
 
-Aliases: rf&lt;/code&gt;&lt;/pre&gt;
+Aliases: rf</code></pre>
 
-&lt;p&gt;pm-releasenotes&lt;/p&gt;
+<p>pm-releasenotes</p>
 
-&lt;pre&gt;&lt;code&gt;Print release notes for given projects.
+<pre><code>Print release notes for given projects.
 
 Examples:
  drush rln cck                             Prints the release notes for the recommended version of
@@ -1713,7 +1680,7 @@ Examples:
 
 Arguments:
  projects                                  A list of project names, with optional version. Defaults
-                                           to &amp;#39;drupal&amp;#39;
+                                           to &#39;drupal&#39;
 
 
 Options:
@@ -1724,11 +1691,11 @@ Options:
                                            http://updates.drupal.org/release-history.
 
 
-Aliases: rln&lt;/code&gt;&lt;/pre&gt;
+Aliases: rln</code></pre>
 
-&lt;p&gt;pm-releases&lt;/p&gt;
+<p>pm-releases</p>
 
-&lt;pre&gt;&lt;code&gt;View all releases for a given drupal.org project. Useful for deciding which version to
+<pre><code>View all releases for a given drupal.org project. Useful for deciding which version to
 install/update.
 
 Examples:
@@ -1737,7 +1704,7 @@ Examples:
 
 
 Arguments:
- projects                                  A list of drupal.org project names. Defaults to &amp;#39;drupal&amp;#39;
+ projects                                  A list of drupal.org project names. Defaults to &#39;drupal&#39;
 
 
 Options:
@@ -1747,18 +1714,18 @@ Options:
                                            http://updates.drupal.org/release-history.
 
 
-Aliases: rl&lt;/code&gt;&lt;/pre&gt;
+Aliases: rl</code></pre>
 
-&lt;h2 id='pmuninstall'&gt;pm-uninstall&lt;/h2&gt;
+<h2 id='pmuninstall'>pm-uninstall</h2>
 
-&lt;pre&gt;&lt;code&gt;Uninstall one or more modules.
+<pre><code>Uninstall one or more modules.
 
 Arguments:
- modules                                   A list of modules.&lt;/code&gt;&lt;/pre&gt;
+ modules                                   A list of modules.</code></pre>
 
-&lt;h2 id='pmupdate'&gt;pm-update&lt;/h2&gt;
+<h2 id='pmupdate'>pm-update</h2>
 
-&lt;pre&gt;&lt;code&gt;Display available update information for Drupal core and all enabled projects and allow updating to
+<pre><code>Display available update information for Drupal core and all enabled projects and allow updating to
 latest recommended releases. Also apply any database updates required (same as pm-updatecode +
 updatedb). Note: The user is asked to confirm before the actual update. Backups are performed unless
 directory is already under version control. Updated projects can potentially break your site. It is
@@ -1770,7 +1737,7 @@ Arguments:
 
 Options:
  --cache                                   Cache release XML and tarballs or git clones. Git clones
-                                           use git&amp;#39;s --reference option.
+                                           use git&#39;s --reference option.
  --lock                                    Add a persistent lock to remove the specified projects
                                            from consideration during updates.  Locks may be removed
                                            with the --unlock parameter, or overridden by
@@ -1833,18 +1800,18 @@ Options:
                                            also using the --svnsync option.
      --svnmessage                          Override default commit message which is: Drush
                                            automatic commit:
-   --svnstatusparams                       Add options to the &amp;#39;svn status&amp;#39; command
+   --svnstatusparams                       Add options to the &#39;svn status&#39; command
    --svnaddparams                          Add options to the `svn add` command
    --svnremoveparams                       Add options to the `svn remove` command
    --svnrevertparams                       Add options to the `svn revert` command
    --svncommitparams                       Add options to the `svn commit` command
 
 
-Aliases: up&lt;/code&gt;&lt;/pre&gt;
+Aliases: up</code></pre>
 
-&lt;p&gt;pm-updatecode&lt;/p&gt;
+<p>pm-updatecode</p>
 
-&lt;pre&gt;&lt;code&gt;Display available update information for Drupal core and all enabled projects and allow updating to
+<pre><code>Display available update information for Drupal core and all enabled projects and allow updating to
 latest recommended releases. Note: The user is asked to confirm before the actual update. Backups
 are performed unless directory is already under version control. Updated projects can potentially
 break your site. It is NOT recommended to update production sites without prior testing.
@@ -1855,7 +1822,7 @@ Arguments:
 
 Options:
  --cache                                   Cache release XML and tarballs or git clones. Git clones
-                                           use git&amp;#39;s --reference option.
+                                           use git&#39;s --reference option.
  --lock                                    Add a persistent lock to remove the specified projects
                                            from consideration during updates.  Locks may be removed
                                            with the --unlock parameter, or overridden by
@@ -1918,18 +1885,18 @@ Options:
                                            also using the --svnsync option.
      --svnmessage                          Override default commit message which is: Drush
                                            automatic commit:
-   --svnstatusparams                       Add options to the &amp;#39;svn status&amp;#39; command
+   --svnstatusparams                       Add options to the &#39;svn status&#39; command
    --svnaddparams                          Add options to the `svn add` command
    --svnremoveparams                       Add options to the `svn remove` command
    --svnrevertparams                       Add options to the `svn revert` command
    --svncommitparams                       Add options to the `svn commit` command
 
 
-Aliases: upc&lt;/code&gt;&lt;/pre&gt;
+Aliases: upc</code></pre>
 
-&lt;p&gt;sql-cli&lt;/p&gt;
+<p>sql-cli</p>
 
-&lt;pre&gt;&lt;code&gt;Open a SQL command-line interface using Drupal&amp;#39;s credentials.
+<pre><code>Open a SQL command-line interface using Drupal&#39;s credentials.
 
 Options:
  --database=                        The DB connection key if using multiple connections in
@@ -1937,45 +1904,45 @@ Options:
  --db-url=                                         install - not re-install.
 
 
-Aliases: sqlc&lt;/code&gt;&lt;/pre&gt;
+Aliases: sqlc</code></pre>
 
-&lt;p&gt;sql-connect&lt;/p&gt;
+<p>sql-connect</p>
 
-&lt;pre&gt;&lt;code&gt;A string for connecting to the DB.
+<pre><code>A string for connecting to the DB.
 
 Examples:
- `drush sql-connect` &amp;lt; example.sql         Import sql statements from a file into the current
+ `drush sql-connect` &lt; example.sql         Import sql statements from a file into the current
                                            database.
 
 
 Options:
  --database=                        The DB connection key if using multiple connections in
                                            settings.php.
- --db-url=                                         install - not re-install.&lt;/code&gt;&lt;/pre&gt;
+ --db-url=                                         install - not re-install.</code></pre>
 
-&lt;p&gt;sql-create&lt;/p&gt;
+<p>sql-create</p>
 
-&lt;pre&gt;&lt;code&gt;Create a database.
+<pre><code>Create a database.
 
 Examples:
  drush sql-create                          Create the database for the current site.
  drush @site.test sql-create               Create the database as specified for @site.test.
  drush sql-create --db-su=root             Create the database as specified in the db-url option.
  --db-su-pw=rootpassword
- --db-url=&amp;quot;mysql://drupal_db_user:drupal_
- db_password@127.0.0.1/drupal_db&amp;quot;
+ --db-url=&quot;mysql://drupal_db_user:drupal_
+ db_password@127.0.0.1/drupal_db&quot;
 
 
 Options:
  --database=                        The DB connection key if using multiple connections in
                                            settings.php.
  --db-su                                   Account to use when creating a new database. Optional.
- --db-su-pw                                Password for the &amp;quot;db-su&amp;quot; account. Optional.
- --db-url=                                         install - not re-install.&lt;/code&gt;&lt;/pre&gt;
+ --db-su-pw                                Password for the &quot;db-su&quot; account. Optional.
+ --db-url=                                         install - not re-install.</code></pre>
 
-&lt;p&gt;sql-drop&lt;/p&gt;
+<p>sql-drop</p>
 
-&lt;pre&gt;&lt;code&gt;Drop all tables in a given database.
+<pre><code>Drop all tables in a given database.
 
 Options:
  --database=                        The DB connection key if using multiple connections in
@@ -1983,11 +1950,11 @@ Options:
  --db-url=                                         install - not re-install.
  --result-file=             Save to a file. The file should be relative to Drupal
                                            root. Recommended.
- --yes                                     Skip confirmation and proceed.&lt;/code&gt;&lt;/pre&gt;
+ --yes                                     Skip confirmation and proceed.</code></pre>
 
-&lt;p&gt;sql-dump&lt;/p&gt;
+<p>sql-dump</p>
 
-&lt;pre&gt;&lt;code&gt;Exports the Drupal DB as SQL using mysqldump or equivalent.
+<pre><code>Exports the Drupal DB as SQL using mysqldump or equivalent.
 
 Examples:
  drush sql-dump --result-file=../18.sql    Save SQL dump to the directory above Drupal root.
@@ -2014,25 +1981,25 @@ Options:
  --structure-tables-key                    A key in the $structure_tables array. @see
                                            example.drushrc.php. Optional.
  --tables-key                              A key in the $tables array. Optional.
- --tables-list                             A comma-separated list of tables to transfer. Optional.&lt;/code&gt;&lt;/pre&gt;
+ --tables-list                             A comma-separated list of tables to transfer. Optional.</code></pre>
 
-&lt;p&gt;sql-query&lt;/p&gt;
+<p>sql-query</p>
 
-&lt;pre&gt;&lt;code&gt;Execute a query against the site database.
+<pre><code>Execute a query against the site database.
 
 Examples:
- drush sql-query &amp;quot;SELECT * FROM users      Browse user record. Table prefixes, if used, must be
- WHERE uid=1&amp;quot;                              added to table names by hand.
- drush sql-query --db-prefix &amp;quot;SELECT *     Browse user record. Table prefixes are honored.
- FROM {users} WHERE uid=1&amp;quot;                 Caution: curly-braces will be stripped from all portions
+ drush sql-query &quot;SELECT * FROM users      Browse user record. Table prefixes, if used, must be
+ WHERE uid=1&quot;                              added to table names by hand.
+ drush sql-query --db-prefix &quot;SELECT *     Browse user record. Table prefixes are honored.
+ FROM {users} WHERE uid=1&quot;                 Caution: curly-braces will be stripped from all portions
                                            of the query.
- `drush sql-connect` &amp;lt; example.sql         Import sql statements from a file into the current
+ `drush sql-connect` &lt; example.sql         Import sql statements from a file into the current
                                            database.
  drush sql-query --file=example.sql        Alternate way to import sql statements from a file.
 
 
 Arguments:
- query                                     An SQL query. Ignored if &amp;#39;file&amp;#39; is provided.
+ query                                     An SQL query. Ignored if &#39;file&#39; is provided.
 
 
 Options:
@@ -2046,11 +2013,11 @@ Options:
                                            root. Optional.
 
 
-Aliases: sqlq&lt;/code&gt;&lt;/pre&gt;
+Aliases: sqlq</code></pre>
 
-&lt;p&gt;sql-sync&lt;/p&gt;
+<p>sql-sync</p>
 
-&lt;pre&gt;&lt;code&gt;Copy and import source database to target database. Transfers via rsync.
+<pre><code>Copy and import source database to target database. Transfers via rsync.
 
 Examples:
  drush sql-sync @prod @dev                 Copy the DB defined in sites/prod to the DB in
@@ -2063,12 +2030,12 @@ Arguments:
 
 
 Options:
- --cache                                   Skip dump if result file exists and is less than &amp;quot;cache&amp;quot;
+ --cache                                   Skip dump if result file exists and is less than &quot;cache&quot;
                                            hours old. Optional; default is 24 hours.
  --create-db                               Create a new database before importing the database dump
                                            on the target machine.
  --db-su=                            Account to use when creating a new database. Optional.
- --db-su-pw=                         Password for the &amp;quot;db-su&amp;quot; account. Optional.
+ --db-su-pw=                         Password for the &quot;db-su&quot; account. Optional.
  --dump-dir                                Directory to store sql dump files in when --source-dump
                                            or --target-dump are not used.  Takes precedence over
                                            --temp.
@@ -2081,12 +2048,12 @@ Options:
  --sanitize                                Obscure email addresses and reset passwords in the user
                                            table post-sync. Optional.
    --sanitize-password                     The password to assign to all accounts in the
-                                           sanitization operation, or &amp;quot;no&amp;quot; to keep passwords
-                                           unchanged.  Default is &amp;quot;password&amp;quot;.
+                                           sanitization operation, or &quot;no&quot; to keep passwords
+                                           unchanged.  Default is &quot;password&quot;.
    --sanitize-email                        The pattern for test email addresses in the sanitization
-                                           operation, or &amp;quot;no&amp;quot; to keep email addresses unchanged.
+                                           operation, or &quot;no&quot; to keep email addresses unchanged.
                                            May contain replacement patterns %uid, %mail or %name.
-                                           Default is &amp;quot;user+%uid@localhost&amp;quot;.
+                                           Default is &quot;user+%uid@localhost&quot;.
    --confirm-sanitizations                 Prompt yes/no after importing the database, but before
                                            running the sanitizations
  --skip-tables-key                         A key in the $skip_tables array. @see
@@ -2113,14 +2080,14 @@ Options:
  --target-target                           Oy. A key within the --target_database identifying a
                                            particular server in the database group.
  --temp                                    Use a temporary file to hold dump files.  Implies
-                                           --no-cache.&lt;/code&gt;&lt;/pre&gt;
+                                           --no-cache.</code></pre>
 
-&lt;p&gt;user-add-role&lt;/p&gt;
+<p>user-add-role</p>
 
-&lt;pre&gt;&lt;code&gt;Add a role to the specified user accounts.
+<pre><code>Add a role to the specified user accounts.
 
 Examples:
- drush user-add-role &amp;quot;power user&amp;quot; 5,user3  Add the &amp;quot;power user&amp;quot; role to the accounts with name, id,
+ drush user-add-role &quot;power user&quot; 5,user3  Add the &quot;power user&quot; role to the accounts with name, id,
  --uid=2,3 --name=someguy,somegal          or email 5 or user3, uids 2 and 3, names someguy and
  --mail=billgates@microsoft.com            somegal, and email address of billgates@microsoft.com
 
@@ -2137,11 +2104,11 @@ Options:
  --uid                                     A comma delimited list of uids
 
 
-Aliases: urol&lt;/code&gt;&lt;/pre&gt;
+Aliases: urol</code></pre>
 
-&lt;p&gt;user-block&lt;/p&gt;
+<p>user-block</p>
 
-&lt;pre&gt;&lt;code&gt;Block the specified user(s).
+<pre><code>Block the specified user(s).
 
 Examples:
  drush user-block 5,user3 --uid=2,3  Block the users with name, id, or email 5 or user3, uids
@@ -2160,11 +2127,11 @@ Options:
  --uid                                     A comma delimited list of uids to block
 
 
-Aliases: ublk&lt;/code&gt;&lt;/pre&gt;
+Aliases: ublk</code></pre>
 
-&lt;p&gt;user-cancel&lt;/p&gt;
+<p>user-cancel</p>
 
-&lt;pre&gt;&lt;code&gt;Cancel a user account with the specified name.
+<pre><code>Cancel a user account with the specified name.
 
 Examples:
  drush user-cancel username                Cancel the user account with the name username and
@@ -2180,16 +2147,16 @@ Options:
                                            to user ID 1, delete it.
 
 
-Aliases: ucan&lt;/code&gt;&lt;/pre&gt;
+Aliases: ucan</code></pre>
 
-&lt;p&gt;user-create&lt;/p&gt;
+<p>user-create</p>
 
-&lt;pre&gt;&lt;code&gt;Create a user account with the specified name.
+<pre><code>Create a user account with the specified name.
 
 Examples:
  drush user-create newuser    Create a new user account with the name newuser, the
- --mail=&amp;quot;person@example.com&amp;quot;  email address person@example.com, and the password
- --password=&amp;quot;letmein&amp;quot;         letmein
+ --mail=&quot;person@example.com&quot;  email address person@example.com, and the password
+ --password=&quot;letmein&quot;         letmein
 
 
 Arguments:
@@ -2201,11 +2168,11 @@ Options:
  --password                                The password for the new account
 
 
-Aliases: ucrt&lt;/code&gt;&lt;/pre&gt;
+Aliases: ucrt</code></pre>
 
-&lt;p&gt;user-information&lt;/p&gt;
+<p>user-information</p>
 
-&lt;pre&gt;&lt;code&gt;Print information about the specified user(s).
+<pre><code>Print information about the specified user(s).
 
 Examples:
  drush user-information                    Display information about any users with uids, names, or
@@ -2224,11 +2191,11 @@ Options:
                                            default)
 
 
-Aliases: uinf&lt;/code&gt;&lt;/pre&gt;
+Aliases: uinf</code></pre>
 
-&lt;p&gt;user-login&lt;/p&gt;
+<p>user-login</p>
 
-&lt;pre&gt;&lt;code&gt;Display a one time login link for the given user account (defaults to uid 1).
+<pre><code>Display a one time login link for the given user account (defaults to uid 1).
 
 Examples:
  drush user-login ryan                     Displays a one-time login link for the user ryan.
@@ -2240,16 +2207,16 @@ Arguments:
                                            log in as uid 1.
 
 
-Aliases: uli&lt;/code&gt;&lt;/pre&gt;
+Aliases: uli</code></pre>
 
-&lt;p&gt;user-password&lt;/p&gt;
+<p>user-password</p>
 
-&lt;pre&gt;&lt;code&gt;(Re)Set the password for the user account with the specified name.
+<pre><code>(Re)Set the password for the user account with the specified name.
 
 Examples:
  drush user-password someuser       Set the password for the username someuser. @see
- --password=&amp;quot;correct horse battery  xkcd.com/936
- staple&amp;quot;
+ --password=&quot;correct horse battery  xkcd.com/936
+ staple&quot;
 
 
 Arguments:
@@ -2260,14 +2227,14 @@ Options:
  --password=                          The new password for the account. Required.
 
 
-Aliases: upwd&lt;/code&gt;&lt;/pre&gt;
+Aliases: upwd</code></pre>
 
-&lt;p&gt;user-remove-role&lt;/p&gt;
+<p>user-remove-role</p>
 
-&lt;pre&gt;&lt;code&gt;Remove a role from the specified user accounts.
+<pre><code>Remove a role from the specified user accounts.
 
 Examples:
- drush user-remove-role &amp;quot;power user&amp;quot;       Remove the &amp;quot;power user&amp;quot; role from the accounts with
+ drush user-remove-role &quot;power user&quot;       Remove the &quot;power user&quot; role from the accounts with
  5,user3 --uid=2,3 --name=someguy,somegal  name, id, or email 5 or user3, uids 2 and 3, names
  --mail=billgates@microsoft.com            someguy and somegal, and email address of
                                            billgates@microsoft.com
@@ -2285,11 +2252,11 @@ Options:
  --uid                                     A comma delimited list of uids
 
 
-Aliases: urrol&lt;/code&gt;&lt;/pre&gt;
+Aliases: urrol</code></pre>
 
-&lt;p&gt;user-unblock&lt;/p&gt;
+<p>user-unblock</p>
 
-&lt;pre&gt;&lt;code&gt;Unblock the specified user(s).
+<pre><code>Unblock the specified user(s).
 
 Examples:
  drush user-unblock 5,user3 --uid=2,3  Unblock the users with name, id, or email 5 or user3,
@@ -2308,11 +2275,11 @@ Options:
  --uid                                     A comma delimited list of uids to unblock
 
 
-Aliases: uublk&lt;/code&gt;&lt;/pre&gt;
+Aliases: uublk</code></pre>
 
-&lt;p&gt;make&lt;/p&gt;
+<p>make</p>
 
-&lt;pre&gt;&lt;code&gt;Turns a makefile into a Drupal codebase. For a full description of options and makefile syntax, see
+<pre><code>Turns a makefile into a Drupal codebase. For a full description of options and makefile syntax, see
 docs/make.txt and examples/example.make.
 
 Examples:
@@ -2331,14 +2298,14 @@ Arguments:
 
 
 Options:
- --concurrency=&amp;lt;1&amp;gt;                         Limits the number of concurrent projects that will be
+ --concurrency=&lt;1&gt;                         Limits the number of concurrent projects that will be
                                            processed at the same time. The default is 4.
  --contrib-destination                     Specify a path under which modules and themes should be
                                            placed. Defaults to sites/all.
  --dev                                     Work with development releases solely.
  --download-mechanism                      How to download files. Should be autodetected, but this
-                                           is an override if it doesn&amp;#39;t work. Options are &amp;quot;curl&amp;quot;
-                                           and &amp;quot;make&amp;quot; (a native download method).
+                                           is an override if it doesn&#39;t work. Options are &quot;curl&quot;
+                                           and &quot;make&quot; (a native download method).
  --force-complete                          Force a complete build even if errors occur.
  --ignore-checksums                        Ignore md5 checksums for downloads.
  --libraries                               Restrict the make to this comma-separated list of
@@ -2369,13 +2336,13 @@ Options:
                                            list of language(s) if available for all projects.
  --version                                 Print the make API version and exit.
  --working-copy                            Preserves VCS directories, like .git, for projects
-                                           downloaded using such methods.&lt;/code&gt;&lt;/pre&gt;
+                                           downloaded using such methods.</code></pre>
 
-&lt;p&gt;make-generate&lt;/p&gt;
+<p>make-generate</p>
 
-&lt;pre&gt;&lt;code&gt;Generate a makefile from the current Drupal site, specifying project version numbers unless not
-known or otherwise specified. Unversioned projects will be interpreted later by drush make as &amp;quot;most
-recent stable release&amp;quot;
+<pre><code>Generate a makefile from the current Drupal site, specifying project version numbers unless not
+known or otherwise specified. Unversioned projects will be interpreted later by drush make as &quot;most
+recent stable release&quot;
 
 Examples:
  drush generate-makefile example.make      Generate a makefile with ALL projects versioned (should
@@ -2402,333 +2369,93 @@ Options:
                                            http://updates.drupal.org/release-history.
 
 
-Aliases: generate-makefile&lt;/code&gt;&lt;/pre&gt;</content>
- </entry>
- 
- <entry>
-   <title>Jekyll Introduction</title>
-   <link href="http://nu_lts.bitbucket.org/lessons/2011/12/29/jekyll-introduction"/>
-   <updated>2011-12-29T00:00:00-05:00</updated>
-   <id>http://nu_lts.bitbucket.org/lessons/2011/12/29/jekyll-introduction</id>
-   <content type="html">&lt;p&gt;This Jekyll introduction will outline specifically what Jekyll is and why you would want to use it. Directly following the intro we&amp;#8217;ll learn exactly &lt;em&gt;how&lt;/em&gt; Jekyll does what it does.&lt;/p&gt;
+Aliases: generate-makefile</code></pre>
+    <hr>
+    <div class="pagination">
+      <ul>
+      
+        <li class="prev"><a href="/lessons/2011/12/29/jekyll-introduction" title="Jekyll Introduction">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/drush/2012/10/10/deploy" title="Deploy">Next &rarr;</a></li>
+      
+      </ul>
+    </div>
+    <hr>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+
+  <div class="span4">
+    <h4>Published</h4>
+    <div class="date"><span>05 October 2012</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+     
+    	<li><a href="/tags.html#drupal-ref">drupal <span>2</span></a></li>
+     
+    	<li><a href="/tags.html#drush-ref">drush <span>2</span></a></li>
+    
+  
+
+
+
+    </ul>
+  
+  </div>
+</div>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; Steven Bassett 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/assets/themes/nu_lts/js/vendor/jquery-1.8.0.min.js"><\/script>')</script>
+        <script src="/assets/themes/nu_lts/js/plugins.js"></script>
+        <script src="/assets/themes/nu_lts/js/main.js"></script>
+        <script src="/assets/themes/nu_lts/js/vendor/bootstrap.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+  </body>
+</html>
 
-&lt;h2 id='overview'&gt;Overview&lt;/h2&gt;
-
-&lt;h3 id='what_is_jekyll'&gt;What is Jekyll?&lt;/h3&gt;
-
-&lt;p&gt;Jekyll is a parsing engine bundled as a ruby gem used to build static websites from dynamic components such as templates, partials, liquid code, markdown, etc. Jekyll is known as &amp;#8220;a simple, blog aware, static site generator&amp;#8221;.&lt;/p&gt;
-
-&lt;h3 id='examples'&gt;Examples&lt;/h3&gt;
-
-&lt;p&gt;This website is created with Jekyll. &lt;a href='https://github.com/mojombo/jekyll/wiki/Sites'&gt;Other Jekyll websites&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h3 id='what_does_jekyll_do'&gt;What does Jekyll Do?&lt;/h3&gt;
-
-&lt;p&gt;Jekyll is a ruby gem you install on your local system. Once there you can call &lt;code&gt;jekyll --server&lt;/code&gt; on a directory and provided that directory is setup in a way jekyll expects, it will do magic stuff like parse markdown/textile files, compute categories, tags, permalinks, and construct your pages from layout templates and partials.&lt;/p&gt;
-
-&lt;p&gt;Once parsed, Jekyll stores the result in a self-contained static &lt;code&gt;_site&lt;/code&gt; folder. The intention here is that you can serve all contents in this folder statically from a plain static web-server.&lt;/p&gt;
-
-&lt;p&gt;You can think of Jekyll as a normalish dynamic blog but rather than parsing content, templates, and tags on each request, Jekyll does this once &lt;em&gt;beforehand&lt;/em&gt; and caches the &lt;em&gt;entire website&lt;/em&gt; in a folder for serving statically.&lt;/p&gt;
-
-&lt;h3 id='jekyll_is_not_blogging_software'&gt;Jekyll is Not Blogging Software&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Jekyll is a parsing engine.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Jekyll does not come with any content nor does it have any templates or design elements. This is a common source of confusion when getting started. Jekyll does not come with anything you actually use or see on your website - you have to make it.&lt;/p&gt;
-
-&lt;h3 id='why_should_i_care'&gt;Why Should I Care?&lt;/h3&gt;
-
-&lt;p&gt;Jekyll is very minimalistic and very efficient. The most important thing to realize about Jekyll is that it creates a static representation of your website requiring only a static web-server. Traditional dynamic blogs like Wordpress require a database and server-side code. Heavily trafficked dynamic blogs must employ a caching layer that ultimately performs the same job Jekyll sets out to do; serve static content.&lt;/p&gt;
-
-&lt;p&gt;Therefore if you like to keep things simple and you prefer the command-line over an admin panel UI then give Jekyll a try.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Developers like Jekyll because we can write content like we write code:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Ability to write content in markdown or textile in your favorite text-editor.&lt;/li&gt;
-
-&lt;li&gt;Ability to write and preview your content via localhost.&lt;/li&gt;
-
-&lt;li&gt;No internet connection required.&lt;/li&gt;
-
-&lt;li&gt;Ability to publish via git.&lt;/li&gt;
-
-&lt;li&gt;Ability to host your blog on a static web-server.&lt;/li&gt;
-
-&lt;li&gt;Ability to host freely on GitHub Pages.&lt;/li&gt;
-
-&lt;li&gt;No database required.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id='how_jekyll_works'&gt;How Jekyll Works&lt;/h1&gt;
-
-&lt;p&gt;The following is a complete but concise outline of exactly how Jekyll works.&lt;/p&gt;
-
-&lt;p&gt;Be aware that core concepts are introduced in rapid succession without code examples. This information is not intended to specifically teach you how to do anything, rather it is intended to give you the &lt;em&gt;full picture&lt;/em&gt; relative to what is going on in Jekyll-world.&lt;/p&gt;
-
-&lt;p&gt;Learning these core concepts should help you avoid common frustrations and ultimately help you better understand the code examples contained throughout Jekyll-Bootstrap.&lt;/p&gt;
-
-&lt;h2 id='initial_setup'&gt;Initial Setup&lt;/h2&gt;
-
-&lt;p&gt;After &lt;a href='/index.html#start-now'&gt;installing jekyll&lt;/a&gt; you&amp;#8217;ll need to format your website directory in a way jekyll expects. Jekyll-bootstrap conveniently provides the base directory format.&lt;/p&gt;
-
-&lt;h3 id='the_jekyll_application_base_format'&gt;The Jekyll Application Base Format&lt;/h3&gt;
-
-&lt;p&gt;Jekyll expects your website directory to be laid out like so:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.
-|-- _config.yml
-|-- _includes
-|-- _layouts
-|   |-- default.html
-|   |-- post.html
-|-- _posts
-|   |-- 20011-10-25-open-source-is-good.markdown
-|   |-- 20011-04-26-hello-world.markdown
-|-- _site
-|-- index.html
-|-- assets
-    |-- css
-        |-- style.css
-    |-- javascripts&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;_config.yml&lt;/strong&gt;&lt;br /&gt;Stores configuration data.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;_includes&lt;/strong&gt;&lt;br /&gt;This folder is for partial views.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;_layouts&lt;/strong&gt; &lt;br /&gt;This folder is for the main templates your content will be inserted into. You can have different layouts for different pages or page sections.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;_posts&lt;/strong&gt;&lt;br /&gt;This folder contains your dynamic content/posts. the naming format is required to be &lt;code&gt;@YEAR-MONTH-DATE-title.MARKUP@&lt;/code&gt;.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;_site&lt;/strong&gt;&lt;br /&gt;This is where the generated site will be placed once Jekyll is done transforming it.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;assets&lt;/strong&gt;&lt;br /&gt;This folder is not part of the standard jekyll structure. The assets folder represents &lt;em&gt;any generic&lt;/em&gt; folder you happen to create in your root directory. Directories and files not properly formatted for jekyll will be left untouched for you to serve normally.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;(read more: &lt;a href='https://github.com/mojombo/jekyll/wiki/Usage'&gt;https://github.com/mojombo/jekyll/wiki/Usage&lt;/a&gt;)&lt;/p&gt;
-
-&lt;h3 id='jekyll_configuration'&gt;Jekyll Configuration&lt;/h3&gt;
-
-&lt;p&gt;Jekyll supports various configuration options that are fully outlined here: &lt;a href='https://github.com/mojombo/jekyll/wiki/Configuration'&gt;https://github.com/mojombo/jekyll/wiki/Configuration&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id='content_in_jekyll'&gt;Content in Jekyll&lt;/h2&gt;
-
-&lt;p&gt;Content in Jekyll is either a post or a page. These content &amp;#8220;objects&amp;#8221; get inserted into one or more templates to build the final output for its respective static-page.&lt;/p&gt;
-
-&lt;h3 id='posts_and_pages'&gt;Posts and Pages&lt;/h3&gt;
-
-&lt;p&gt;Both posts and pages should be written in markdown, textile, or HTML and may also contain Liquid templating syntax. Both posts and pages can have meta-data assigned on a per-page basis such as title, url path, as well as arbitrary custom meta-data.&lt;/p&gt;
-
-&lt;h3 id='working_with_posts'&gt;Working With Posts&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Creating a Post&lt;/strong&gt; &lt;br /&gt;Posts are created by properly formatting a file and placing it the &lt;code&gt;_posts&lt;/code&gt; folder.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;&lt;br /&gt;A post must have a valid filename in the form &lt;code&gt;YEAR-MONTH-DATE-title.MARKUP&lt;/code&gt; and be placed in the &lt;code&gt;_posts&lt;/code&gt; directory. If the data format is invalid Jekyll will not recognize the file as a post. The date and title are automatically parsed from the filename of the post file. Additionally, each file must have &lt;a href='https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter'&gt;YAML Front-Matter&lt;/a&gt; prepended to its content. YAML Front-Matter is a valid YAML syntax specifying meta-data for the given file.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Order&lt;/strong&gt;&lt;br /&gt;Ordering is an important part of Jekyll but it is hard to specify a custom ordering strategy. Only reverse chronological and chronological ordering is supported in Jekyll.&lt;/p&gt;
-
-&lt;p&gt;Since the date is hard-coded into the filename format, to change the order, you must change the dates in the filenames.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Tags&lt;/strong&gt; &lt;br /&gt;Posts can have tags associated with them as part of their meta-data. Tags may be placed on posts by providing them in the post&amp;#8217;s YAML front matter. You have access to the post-specific tags in the templates. These tags also get added to the sitewide collection.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Categories&lt;/strong&gt; &lt;br /&gt;Posts may be categorized by providing one or more categories in the YAML front matter. Categories offer more significance over tags in that they can be reflected in the URL path to the given post. Note categories in Jekyll work in a specific way. If you define more than one category you are defining a category hierarchy &amp;#8220;set&amp;#8221;. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;---
-title :  Hello World
-categories : [lessons, beginner]
----&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This defines the category hierarchy &amp;#8220;lessons/beginner&amp;#8221;. Note this is &lt;em&gt;one category&lt;/em&gt; node in Jekyll. You won&amp;#8217;t find &amp;#8220;lessons&amp;#8221; and &amp;#8220;beginner&amp;#8221; as two separate categories unless you define them elsewhere as singular categories.&lt;/p&gt;
-
-&lt;h3 id='working_with_pages'&gt;Working With Pages&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Creating a Page&lt;/strong&gt;&lt;br /&gt;Pages are created by properly formatting a file and placing it anywhere in the root directory or subdirectories that do &lt;em&gt;not&lt;/em&gt; start with an underscore.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;&lt;br /&gt;In order to register as a Jekyll page the file must contain &lt;a href='https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter'&gt;YAML Front-Matter&lt;/a&gt;. Registering a page means 1) that Jekyll will process the page and 2) that the page object will be available in the &lt;code&gt;site.pages&lt;/code&gt; array for inclusion into your templates.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Categories and Tags&lt;/strong&gt;&lt;br /&gt;Pages do not compute categories nor tags so defining them will have no effect.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Sub-Directories&lt;/strong&gt;&lt;br /&gt;If pages are defined in sub-directories, the path to the page will be reflected in the url. Example:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;.
-|-- people
-    |-- bob
-        |-- essay.html&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;This page will be available at &lt;code&gt;http://yourdomain.com/people/bob/essay.html&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Recommended Pages&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;index.html&lt;/strong&gt;&lt;br /&gt;You will always want to define the root index.html page as this will display on your root URL.&lt;/li&gt;
-
-&lt;li&gt;&lt;strong&gt;404.html&lt;/strong&gt;&lt;br /&gt;Create a root 404.html page and GitHub Pages will serve it as your 404 response.&lt;/li&gt;
-
-&lt;li&gt;&lt;strong&gt;sitemap.html&lt;/strong&gt;&lt;br /&gt;Generating a sitemap is good practice for SEO.&lt;/li&gt;
-
-&lt;li&gt;&lt;strong&gt;about.html&lt;/strong&gt;&lt;br /&gt;A nice about page is easy to do and gives the human perspective to your website.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id='templates_in_jekyll'&gt;Templates in Jekyll&lt;/h2&gt;
-
-&lt;p&gt;Templates are used to contain a page&amp;#8217;s or post&amp;#8217;s content. All templates have access to a global site object variable: &lt;code&gt;site&lt;/code&gt; as well as a page object variable: &lt;code&gt;page&lt;/code&gt;. The site variable holds all accessible content and metadata relative to the site. The page variable holds accessible data for the given page or post being rendered at that point.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Create a Template&lt;/strong&gt;&lt;br /&gt;Templates are created by properly formatting a file and placing it in the &lt;code&gt;_layouts&lt;/code&gt; directory.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Formatting&lt;/strong&gt;&lt;br /&gt;Templates should be coded in HTML and contain YAML Front Matter. All templates can contain Liquid code to work with your site&amp;#8217;s data.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Rending Page/Post Content in a Template&lt;/strong&gt;&lt;br /&gt;There is a special variable in all templates named : &lt;code&gt;content&lt;/code&gt;. The &lt;code&gt;content&lt;/code&gt; variable holds the page/post content including any sub-template content previously defined. Render the content variable wherever you want your main content to be injected into your template:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;...
-&amp;lt;body&amp;gt;
-  &amp;lt;div id=&quot;sidebar&quot;&amp;gt; ... &amp;lt;/div&amp;gt;
-  &amp;lt;div id=&quot;main&quot;&amp;gt;
-    &amp;#123;{content}&amp;#125;
-  &amp;lt;/div&amp;gt;
-&amp;lt;/body&amp;gt;
-...&lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id='subtemplates'&gt;Sub-Templates&lt;/h3&gt;
-
-&lt;p&gt;Sub-templates are exactly templates with the only difference being they define another &amp;#8220;root&amp;#8221; layout/template within their YAML Front Matter. This essentially means a template will render inside of another template.&lt;/p&gt;
-
-&lt;h3 id='includes'&gt;Includes&lt;/h3&gt;
-
-&lt;p&gt;In Jekyll you can define include files by placing them in the &lt;code&gt;_includes&lt;/code&gt; folder. Includes are NOT templates, rather they are just code snippets that get included into templates. In this way, you can treat the code inside includes as if it was native to the parent template.&lt;/p&gt;
-
-&lt;p&gt;Any valid template code may be used in includes.&lt;/p&gt;
-
-&lt;h2 id='using_liquid_for_templating'&gt;Using Liquid for Templating&lt;/h2&gt;
-
-&lt;p&gt;Templating is perhaps the most confusing and frustrating part of Jekyll. This is mainly due to the fact that Jekyll templates must use the Liquid Templating Language.&lt;/p&gt;
-
-&lt;h3 id='what_is_liquid'&gt;What is Liquid?&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href='https://github.com/Shopify/liquid'&gt;Liquid&lt;/a&gt; is a secure templating language developed by &lt;a href='http://shopify.com'&gt;Shopify&lt;/a&gt;. Liquid is designed for end-users to be able to execute logic within template files without imposing any security risk on the hosting server.&lt;/p&gt;
-
-&lt;p&gt;Jekyll uses Liquid to generate the post content within the final page layout structure and as the primary interface for working with your site and post/page data.&lt;/p&gt;
-
-&lt;h3 id='why_do_we_have_to_use_liquid'&gt;Why Do We Have to Use Liquid?&lt;/h3&gt;
-
-&lt;p&gt;GitHub uses Jekyll to power &lt;a href='http://pages.github.com/'&gt;GitHub Pages&lt;/a&gt;. GitHub cannot afford to run arbitrary code on their servers so they lock developers down via Liquid.&lt;/p&gt;
-
-&lt;h3 id='liquid_is_not_programmerfriendly'&gt;Liquid is Not Programmer-Friendly.&lt;/h3&gt;
-
-&lt;p&gt;The short story is liquid is not real code and its not intended to execute real code. The point being you can&amp;#8217;t do jackshit in liquid that hasn&amp;#8217;t been allowed explicitly by the implementation. What&amp;#8217;s more you can only access data-structures that have been explicitly passed to the template.&lt;/p&gt;
-
-&lt;p&gt;In Jekyll&amp;#8217;s case it is not possible to alter what is passed to Liquid without hacking the gem or running custom plugins. Both of which cannot be supported by GitHub Pages.&lt;/p&gt;
-
-&lt;p&gt;As a programmer - this is very frustrating.&lt;/p&gt;
-
-&lt;p&gt;But rather than look a gift horse in the mouth we are going to suck it up and view it as an opportunity to work around limitations and adopt client-side solutions when possible.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Aside&lt;/strong&gt; &lt;br /&gt;My personal stance is to not invest time trying to hack liquid. It&amp;#8217;s really unnecessary &lt;em&gt;from a programmer&amp;#8217;s&lt;/em&gt; perspective. That is to say if you have the ability to run custom plugins (i.e. run arbitrary ruby code) you are better off sticking with ruby. Toward that end I&amp;#8217;ve built &lt;a href='http://github.com/plusjade/mustache-with-jekyll'&gt;Mustache-with-Jekyll&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id='static_assets'&gt;Static Assets&lt;/h2&gt;
-
-&lt;p&gt;Static assets are any file in the root or non-underscored subfolders that are not pages. That is they have no valid YAML Front Matter and are thus not treated as Jekyll Pages.&lt;/p&gt;
-
-&lt;p&gt;Static assets should be used for images, css, and javascript files.&lt;/p&gt;
-
-&lt;h2 id='how_jekyll_parses_files'&gt;How Jekyll Parses Files&lt;/h2&gt;
-
-&lt;p&gt;Remember Jekyll is a processing engine. There are two main types of parsing in Jekyll.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Content parsing.&lt;/strong&gt; &lt;br /&gt;This is done with textile or markdown.&lt;/li&gt;
-
-&lt;li&gt;&lt;strong&gt;Template parsing.&lt;/strong&gt; &lt;br /&gt;This is done with the liquid templating language.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;And thus there are two main types of file formats needed for this parsing.&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Post and Page files.&lt;/strong&gt;&lt;br /&gt;All content in Jekyll is either a post or a page so valid posts and pages are parsed with markdown or textile.&lt;/li&gt;
-
-&lt;li&gt;&lt;strong&gt;Template files.&lt;/strong&gt; &lt;br /&gt;These files go in &lt;code&gt;_layouts&lt;/code&gt; folder and contain your blogs &lt;strong&gt;templates&lt;/strong&gt;. They should be made in HTML with the help of Liquid syntax. Since include files are simply injected into templates they are essentially parsed as if they were native to the template.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Arbitrary files and folders.&lt;/strong&gt; &lt;br /&gt;Files that &lt;em&gt;are not&lt;/em&gt; valid pages are treated as static content and pass through Jekyll untouched and reside on your blog in the exact structure and format they originally existed in.&lt;/p&gt;
-
-&lt;h3 id='formatting_files_for_parsing'&gt;Formatting Files for Parsing.&lt;/h3&gt;
-
-&lt;p&gt;We&amp;#8217;ve outlined the need for valid formatting using &lt;strong&gt;YAML Front Matter&lt;/strong&gt;. Templates, posts, and pages all need to provide valid YAML Front Matter even if the Matter is empty. This is the only way Jekyll knows you want the file processed.&lt;/p&gt;
-
-&lt;p&gt;YAML Front Matter must be prepended to the top of template/post/page files:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;---
-layout: post
-category : pages
-tags : [how-to, jekyll]
----
-
-... contents ...&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Three hyphens on a new line start the Front-Matter block and three hyphens on a new line end the block. The data inside the block must be valid YAML.&lt;/p&gt;
-
-&lt;p&gt;Configuration parameters for YAML Front-Matter is outlined here: &lt;a href='https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter'&gt;A comprehensive explanation of YAML Front Matter&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id='defining_layouts_for_posts_and_templates_parsing'&gt;Defining Layouts for Posts and Templates Parsing.&lt;/h4&gt;
-
-&lt;p&gt;The &lt;code&gt;layout&lt;/code&gt; parameter in the YAML Front Matter defines the template file for which the given post or template should be injected into. If a template file specifies its own layout, it is effectively being used as a &lt;code&gt;sub-template.&lt;/code&gt; That is to say loading a post file into a template file that refers to another template file with work in the way you&amp;#8217;d expect; as a nested sub-template.&lt;/p&gt;
-
-&lt;h2 id='how_jekyll_generates_the_final_static_files'&gt;How Jekyll Generates the Final Static Files.&lt;/h2&gt;
-
-&lt;p&gt;Ultimately, Jekyll&amp;#8217;s job is to generate a static representation of your website. The following is an outline of how that&amp;#8217;s done:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Jekyll collects data.&lt;/strong&gt; &lt;br /&gt;Jekyll scans the posts directory and collects all posts files as post objects. It then scans the layout assets and collects those and finally scans other directories in search of pages.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Jekyll computes data.&lt;/strong&gt; &lt;br /&gt;Jekyll takes these objects, computes metadata (permalinks, tags, categories, titles, dates) from them and constructs one big &lt;code&gt;site&lt;/code&gt; object that holds all the posts, pages, layouts, and respective metadata. At this stage your site is one big computed ruby object.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Jekyll liquifies posts and templates.&lt;/strong&gt;&lt;br /&gt;Next jekyll loops through each post file and converts (through markdown or textile) and &lt;strong&gt;liquifies&lt;/strong&gt; the post inside of its respective layout(s). Once the post is parsed and liquified inside the the proper layout structure, the layout itself is &amp;#8220;liquified&amp;#8221;. &lt;br /&gt;&lt;strong&gt;Liquification&lt;/strong&gt; is defined as follows: Jekyll initiates a Liquid template, and passes a simpler hash representation of the ruby site object as well as a simpler hash representation of the ruby post object. These simplified data structures are what you have access to in the templates.&lt;/p&gt;
-&lt;/li&gt;
-
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;Jekyll generates output.&lt;/strong&gt; &lt;br /&gt;Finally the liquid templates are &amp;#8220;rendered&amp;#8221;, thereby processing any liquid syntax provided in the templates and saving the final, static representation of the file.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;strong&gt;Notes.&lt;/strong&gt;&lt;br /&gt;Because Jekyll computes the entire site in one fell swoop, each template is given access to a global &lt;code&gt;site&lt;/code&gt; hash that contains useful data. It is this data that you&amp;#8217;ll iterate through and format using the Liquid tags and filters in order to render it onto a given page.&lt;/p&gt;
-
-&lt;p&gt;Remember, in Jekyll you are an end-user. Your API has only two components:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;The manner in which you setup your directory.&lt;/li&gt;
-
-&lt;li&gt;The liquid syntax and variables passed into the liquid templates.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;All the data objects available to you in the templates via Liquid are outlined in the &lt;strong&gt;API Section&lt;/strong&gt; of Jekyll-Bootstrap. You can also read the original documentation here: &lt;a href='https://github.com/mojombo/jekyll/wiki/Template-Data'&gt;https://github.com/mojombo/jekyll/wiki/Template-Data&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id='conclusion'&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;I hope this paints a clearer picture of what Jekyll is doing and why it works the way it does. As noted, our main programming constraint is the fact that our API is limited to what is accessible via Liquid and Liquid only.&lt;/p&gt;
-
-&lt;p&gt;Jekyll-bootstrap is intended to provide helper methods and strategies aimed at making it more intuitive and easier to work with Jekyll =)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Thank you&lt;/strong&gt; for reading this far.&lt;/p&gt;
-
-&lt;h2 id='next_steps'&gt;Next Steps&lt;/h2&gt;
-
-&lt;p&gt;Please take a look at &lt;a href='' /&gt; or jump right into &lt;a href=''&gt;Usage&lt;/a&gt; if you&amp;#8217;d like.&lt;/p&gt;</content>
- </entry>
- 
- 
-</feed>
