@@ -4,13 +4,228 @@
  <title>Library Technology Services</title>
  <link href="http://nu_lts.bitbucket.org/atom.xml" rel="self"/>
  <link href="http://nu_lts.bitbucket.org"/>
- <updated>2012-10-10T16:24:31-04:00</updated>
+ <updated>2012-10-11T12:52:06-04:00</updated>
  <id>http://nu_lts.bitbucket.org</id>
  <author>
    <name>Steven Bassett</name>
    <email>s.bassett@neu.edu</email>
  </author>
 
+ 
+ <entry>
+   <title>Drupal Site Deployment</title>
+   <link href="http://nu_lts.bitbucket.org/drush/2012/10/11/Drupal-Site-Deployment"/>
+   <updated>2012-10-11T00:00:00-04:00</updated>
+   <id>http://nu_lts.bitbucket.org/drush/2012/10/11/Drupal-Site-Deployment</id>
+   <content type="html">&lt;p&gt;This is a short article on how to use a local Linux, Apache, MySQL and PHP environment for website development and deployment to the staging and/or production server. I please leave comments if you have any additional suggestions.&lt;/p&gt;
+
+&lt;h2 id='installing_the_required_software_locally'&gt;Installing the required software locally.&lt;/h2&gt;
+
+&lt;p&gt;You will need to make sure that that you have the software installed and configured before you can try moving a site locallly.&lt;/p&gt;
+
+&lt;h3 id='download_and_install_mamp_or_mamp_pro'&gt;Download and install &lt;a href='http://www.mamp.info/en/index.html'&gt;MAMP or MAMP Pro&lt;/a&gt;.&lt;/h3&gt;
+
+&lt;p&gt;I like to configure my development enviroment to point to the &lt;code&gt;~/Sites/&lt;/code&gt; directory to serve the sites.&lt;/p&gt;
+
+&lt;h3 id='installing_git_version_control'&gt;Installing git version control&lt;/h3&gt;
+
+&lt;p&gt;Download and install the latest version of &lt;a href='http://git-scm.com/'&gt;git&lt;/a&gt;. Follow the instructions. If you’re looking for some enticing reading, check out &lt;a href='http://git-scm.com/book'&gt;Pro Git&lt;/a&gt; for detailed infomation about git version control.&lt;/p&gt;
+
+&lt;h3 id='installing_drush'&gt;Installing Drush&lt;/h3&gt;
+
+&lt;p&gt;Please read the following Administration Guide from Drupal.org for the most up to date information on installing drush &lt;a href='https://drupal.org/node/1791676'&gt;Specific instructions for installing Drush on different platforms&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h4 id='drush_with_mamp_pro'&gt;Drush with MAMP Pro&lt;/h4&gt;
+
+&lt;p&gt;&lt;em&gt;Please read this article for the most up to date information&lt;/em&gt; &lt;a href='http://brianfisher.name/content/drupal-development-environment-os-x-mamp-pro-eclipse-xdebug-and-drush'&gt;Original Article&lt;/a&gt; These instructions are somewhat specific to MAMP PRO 2.1.1. &lt;a href='http://www.mamp.info/en/downloads/index.html'&gt;Download&lt;/a&gt;, install, and launch MAMP Pro.&lt;/p&gt;
+
+&lt;p&gt;Under the PHP tab, select php 5.x from version pulldown. Click &amp;#8220;Apply&amp;#8221;. Click &amp;#8220;Start&amp;#8221;.&lt;/p&gt;
+
+&lt;p&gt;Add the MAMP executables to your path.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;chmod +x /Applications/MAMP/bin/php/php5.3.14/bin/*
+echo &amp;quot;export PATH=/Applications/MAMP/bin/php/php5.3.14/bin:/Applications/MAMP/Library/bin:\$PATH&amp;quot; &amp;gt;&amp;gt; ~/.profile
+. ~/.profile&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Add a symlink to the MAMP Mysql socket to allow drush to connect&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;sudo mkdir /var/mysql
+sudo ln -s /Applications/MAMP/tmp/mysql/mysql.sock /var/mysql/mysql.sock&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id='performace'&gt;Performace&lt;/h5&gt;
+
+&lt;p&gt;Please change the default php and mysql settings so that there are enough resources for both drush and drupal to run.&lt;/p&gt;
+
+&lt;h6 id='mysql'&gt;MYSQL&lt;/h6&gt;
+
+&lt;p&gt;You may get &amp;#8220;MySql server has gone away&amp;#8221; errors. To fix, in MAMP, edit the mysql configuration by going to file-&amp;gt;edit template-&amp;gt;mysql. Change &lt;code&gt;max_allowed_packet&lt;/code&gt; to &lt;code&gt;max_allowed_packet =  16M&lt;/code&gt;&lt;/p&gt;
+
+&lt;h6 id='php'&gt;PHP&lt;/h6&gt;
+
+&lt;p&gt;Increase both the MAMP PHP memory limit. In MAMP, edit the php configuration file-&amp;gt;edit template-&amp;gt;php-&amp;gt;php5.3 change &lt;code&gt;memory_limit&lt;/code&gt; to &lt;code&gt;memory_limit =  256M&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Increase the CLI PHP memory limit. To figure out where your CLI php.ini file is, use: &lt;code&gt;$ which php&lt;/code&gt; then &lt;code&gt;php -i | grep  php.in&lt;/code&gt;. Then edit the file and change &lt;code&gt;memory_limit&lt;/code&gt; to &lt;code&gt;memory_limit =  -1&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id='cloning_production_site_to_your_local_environment'&gt;Cloning production site to your local environment.&lt;/h3&gt;
+
+&lt;h4 id='clone_the_git_repository'&gt;Clone the Git repository.&lt;/h4&gt;
+
+&lt;p&gt;Open Terminal. Use git to clone the repository for the project you’re working on from our &lt;a href='https://bitbucket.org/nu_lts'&gt;Bitbucket Account&lt;/a&gt;. For example use, &lt;code&gt;git clone git@bitbucket.org:nu_lts/dmc.git ~/sites/dmc.neu.edu/&lt;/code&gt;, &lt;em&gt;clone from remote to this directory&lt;/em&gt;. Note that this will only bring down the code that is being tracked by the git repository. It will not bring down any files or directories not tracked by Git.&lt;/p&gt;
+
+&lt;h3 id='setting_up_drush_site_aliases'&gt;Setting Up Drush Site Aliases&lt;/h3&gt;
+
+&lt;p&gt;Go to your root apache htdocs folder, in my case &lt;code&gt;cd ~/Sites&lt;/code&gt;. Set up a file structure such as: &lt;code&gt;~/Sites/library.neu.edu/&lt;/code&gt; to act as the local root for your Drupal directory. This would let you access your site from&lt;a href='localhost:8888/library.neu.edu/'&gt;localhost:8888/library.neu.edu/&lt;/a&gt; in a default MAMP environment.&lt;/p&gt;
+
+&lt;h5 id='where_drush_looks_for_aliases'&gt;Where drush looks for aliases.&lt;/h5&gt;
+
+&lt;p&gt;I have used the following location by using: &lt;code&gt;cp /path/to/drush/examples/example.aliases.drushrc.php ~/.drush/aliases.drushrc.php&lt;/code&gt; to move the example file with documentation to my home directory that drush will look at to find aliases.&lt;/p&gt;
+
+&lt;p&gt;Defualt Locations&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;/etc/drush&lt;/li&gt;
+
+&lt;li&gt;$HOME/.drush&lt;/li&gt;
+
+&lt;li&gt;The sites/all/drush folder for the current Drupal site&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Edit the &lt;code&gt;aliases.drushrc.php&lt;/code&gt; file by configuring the production, staging and local environment you would like to work with eg:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$aliases[&amp;#39;dmc.local&amp;#39;] = array(
+&amp;#39;uri&amp;#39; =&amp;gt; &amp;#39;localhost:8888/dmc.neu.edu&amp;#39;,
+&amp;#39;root&amp;#39; =&amp;gt; &amp;#39;/Users/steven/Sites/dmc.neu.edu&amp;#39;, // This doesn&amp;#39;t work with ~/Sites/dev.local
+&amp;#39;db_url&amp;#39; =&amp;gt; &amp;#39;mysql://root:root@localhost:8889/dmc&amp;#39;,
+&amp;#39;path-aliases&amp;#39; =&amp;gt; array(
+  &amp;#39;%files&amp;#39; =&amp;gt; &amp;#39;sites/defualt/files&amp;#39;,
+  &amp;#39;%dump&amp;#39; =&amp;gt; &amp;#39;/Users/steven/tmp/drush/sql-sync-dev-local.sql&amp;#39;, // Arbitrary location for temp files
+  ),
+);
+$aliases[&amp;#39;dmc.prod&amp;#39;] = array(
+&amp;#39;uri&amp;#39; =&amp;gt; &amp;#39;defualt&amp;#39;,
+&amp;#39;root&amp;#39; =&amp;gt; &amp;#39;/var/www/html&amp;#39;,
+&amp;#39;databases&amp;#39; =&amp;gt;
+  array (
+   &amp;#39;default&amp;#39; =&amp;gt;
+   array (
+   &amp;#39;default&amp;#39; =&amp;gt;
+   array (
+   &amp;#39;database&amp;#39; =&amp;gt; &amp;#39;dmc&amp;#39;,
+   &amp;#39;username&amp;#39; =&amp;gt; &amp;#39;dmc1&amp;#39;,
+   &amp;#39;password&amp;#39; =&amp;gt; ‘****’,
+   &amp;#39;host&amp;#39; =&amp;gt; &amp;#39;localhost&amp;#39;,
+   &amp;#39;port&amp;#39; =&amp;gt; &amp;#39;&amp;#39;,
+   &amp;#39;driver&amp;#39; =&amp;gt; &amp;#39;mysql&amp;#39;,
+   &amp;#39;prefix&amp;#39; =&amp;gt; &amp;#39;&amp;#39;,
+   ),
+   ),
+  ),
+&amp;#39;remote-user&amp;#39; =&amp;gt; &amp;#39;sbassett&amp;#39;,
+&amp;#39;remote-host&amp;#39; =&amp;gt; &amp;#39;155.33.22.226&amp;#39;,
+&amp;#39;path-aliases&amp;#39; =&amp;gt; array(
+  &amp;#39;%drush&amp;#39; =&amp;gt; &amp;#39;/usr/local/share/drush&amp;#39;,
+  &amp;#39;%site&amp;#39; =&amp;gt; &amp;#39;sites/default&amp;#39;,
+  &amp;#39;%files&amp;#39; =&amp;gt; &amp;#39;sites/defualt/files&amp;#39;,
+  &amp;#39;%dump&amp;#39; =&amp;gt; &amp;#39;tmp&amp;#39;, // Arbitrary location for temp files
+  ),
+);&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id='finding_the_site_information_for_the_aliases'&gt;Finding the site information for the aliases&lt;/h3&gt;
+
+&lt;p&gt;Tip from &lt;a href='https://drupal.org/node/670460'&gt;Using drush to synchronize and deploy sites&lt;/a&gt;. Creating the site-alias config array is tedious by hand. If you have a working site. Change into the site dir of a working site and run &lt;code&gt;drush site-alias --with-db --show-passwords --with-optional @self&lt;/code&gt; I often go &lt;code&gt;drush site-alias --with-db --show-password --with-optional @self &amp;gt;
+/etc/drush/mysqit.alias.drushrc.php&lt;/code&gt; and then &lt;strong&gt;importantly&lt;/strong&gt; edit the resulting new files and A: add a &lt;code&gt;&amp;lt;?php&lt;/code&gt; tag to the top! B: relabel it from @self to your preferred nickname - which must match the filename you used. Those extra connection details are required for remote aliases. If you want, you can also split out the component parts of an alias and use inheritance to construct the peer alias.&lt;/p&gt;
+
+&lt;h3 id='ssh_key_pairs'&gt;SSH Key Pairs&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Required for Drush to work with remote servers&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Go to your .ssh directory: &lt;code&gt;$ cd ~/.ssh&lt;/code&gt; Check for keys:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ls
+id_rsa		id_rsa.pub&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If there are no keys like that above try creating the keys using the directions from github:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ ssh-keygen -t rsa -C &amp;quot;your_email@youremail.com&amp;quot;
+# Creates a new ssh key using the provided email
+# Generating public/private rsa key pair.
+# Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Do not enter a passphrase:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Enter passphrase (empty for no passphrase): [Press enter]
+Enter same passphrase again: [Press enter]&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Should return:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Your identification has been saved in /Users/you/.ssh/id_rsa.
+Your public key has been saved in /Users/you/.ssh/id_rsa.pub.
+The key fingerprint is:
+01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db your_email@youremail.com&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make sure to create the &lt;code&gt;touch ~/.ssh/authorized_keys&lt;/code&gt; file. Try to create the permissions to be like the following for your environment:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ cd ~/.ssh
+$ ls -al
+drwx------ 2 user user 4096 Oct 10 12:31 .
+drwx------ 3 user user 4096 Oct 10 12:51 ..
+-rw------- 1 user user  808 Oct 10 12:50 authorized_keys
+-rw------- 1 user user 1675 Oct 10 12:31 identity
+-rw------- 1 user user 1675 Oct 10 12:16 id_rsa
+-rw-r--r-- 1 user user  398 Oct 10 12:16 id_rsa.pub&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;SSH into the remote server &lt;code&gt;$ ssh user@example.neu.edu&lt;/code&gt;, then create a keypair for the remote server using the same method above. &lt;strong&gt;(Don’t forget to check the permissions!)&lt;/strong&gt; When you have completed the steps on both your local and remote machines, then you can add your key to the remote server. From your &lt;strong&gt;local terminal&lt;/strong&gt;: $ login=username@hostname $ ssh $login &amp;#8220;echo &amp;#8217;&lt;code&gt;cat ~/.ssh/id_rsa.pub&lt;/code&gt;&amp;#8217;&amp;#160;&amp;#187; ~/.ssh/authorized_keys&amp;#8221;&lt;/p&gt;
+
+&lt;p&gt;To debug what might be happening you can run: $ ssh -v user@server.edu &lt;strong&gt;&lt;em&gt;Need more assistance making a bootstrap way of creating key pairs.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id='using_drush_commands_on_remote_servers'&gt;Using Drush commands on remote servers&lt;/h3&gt;
+
+&lt;p&gt;To use drush commands on a remote server you can simply use the alias for. For example I can look and see the basic site status for the DMC website. &lt;code&gt;$ drush @dmc.prod status&lt;/code&gt; should return the basic overview of the remote site.&lt;/p&gt;
+
+&lt;h3 id='using_rsync_to_fetch_files_from_the_remote_server'&gt;Using rsync to fetch files from the remote server.&lt;/h3&gt;
+
+&lt;p&gt;Go fetch the files from our production server to local server: &lt;code&gt;drush rsync @dmc.prod:%files/ @dmc.local:%files/
+&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id='using_drush_to_run_a_site_install'&gt;Using drush to run a site install&lt;/h3&gt;
+
+&lt;p&gt;Before running the command please make sure to look at &lt;code&gt;drush site-install —help&lt;/code&gt; for instructions. To install the local site into mamp you can run the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ drush @dmc.local use
+$ drush si&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If the aliases are configured correctly, you can go the the local url eg localhost:8888/dmc.neu.edu/ and it should install a basic site. Nothing special.&lt;/p&gt;
+
+&lt;h3 id='using_drush_to_sync_the_databases'&gt;Using drush to sync the databases&lt;/h3&gt;
+
+&lt;p&gt;&lt;em&gt;Note: you will probably want to clear the cache on both sites before the transfer&lt;/em&gt; &lt;code&gt;$ drush cc all&lt;/code&gt;. Use the drush &lt;code&gt;sql-sync&lt;/code&gt; command to send from source to target. For example to create your local enviromnet, you will want to pull down the sql database using: &lt;code&gt;$ drush sql-sync @dmc.prod @dmc.local&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id='notes_for_trouble_shooting_whitescreenofdeath_wsod'&gt;Notes for trouble shooting White-Screen-Of-Death (WSOD)&lt;/h3&gt;
+
+&lt;p&gt;Try turning off clean urls: &lt;code&gt;$ drush vset --exact clean_url 0&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Clear the cache &lt;code&gt;$ drush cc all&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Look at the settings.php file in the sites/default/ directory.&lt;/p&gt;
+
+&lt;p&gt;Look at the .htaccess file.&lt;/p&gt;
+
+&lt;p&gt;Refer to the php.ini files to make sure that MAMP is configured to give enough memory for both drush and drupal to run.&lt;/p&gt;
+
+&lt;p&gt;Check your mysql and php error logs, with MAMP they are located &lt;code&gt;/Applications/MAMP/logs/&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id='articles'&gt;Articles&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://drupal.org/node/670460'&gt;Using drush to synchronize and deploy sites&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://brianfisher.name/content/drupal-development-environment-os-x-mamp-pro-eclipse-xdebug-and-drush'&gt;A Drupal Development Environment on OS X with MAMP Pro, Eclipse, xDebug, and Drush&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://drupal.org/node/601604'&gt;getting drush to work on a MAMP setup&lt;/a&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='http://drush.ws/'&gt;Drush Official Site&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+ </entry>
  
  <entry>
    <title>Deploy</title>
@@ -60,8 +275,8 @@ sdk/downloads/list'&gt;Eclipse+PDT&lt;/a&gt; or &lt;a href='http://www.zend.com/
 
 &lt;p&gt;In Eclipse preferences, open PHP-&amp;gt;PHP Executables, and set the php interpreter to be the MAMP 5.3.x executable.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/eclipse_i
-nterpreter.png' alt='Eclipse PHP Interpreter' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt='Eclipse PHP Interpreter' src='/sites/brianfisher.name/files/field/image/eclipse_i
+nterpreter.png' /&gt;&lt;/p&gt;
 
 &lt;p&gt;Eclipse PHP Interpreter&lt;/p&gt;
 
@@ -69,13 +284,13 @@ nterpreter.png' alt='Eclipse PHP Interpreter' /&gt;&lt;/p&gt;
 
 &lt;p&gt;1. File-&amp;gt;New-&amp;gt;Project: &amp;#8220;PHP Project from Existing Directory&amp;#8221;. Set the location to the MAMP htdocs directory &lt;em&gt;/Applications/MAMP/htdocs&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src='/files/field/image/new_project.png' alt='New Project' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt='New Project' src='/files/field/image/new_project.png' /&gt;&lt;/p&gt;
 
 &lt;p&gt;New Project&lt;/p&gt;
 
 &lt;p&gt;2. Open index.php, set breakpoint at first line of php (double click to left of line numbers).&lt;/p&gt;
 
-&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/breakpoint.png' alt='A Breakpoint' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt='A Breakpoint' src='/sites/brianfisher.name/files/field/image/breakpoint.png' /&gt;&lt;/p&gt;
 
 &lt;p&gt;A Breakpoint&lt;/p&gt;
 
@@ -85,13 +300,13 @@ nterpreter.png' alt='Eclipse PHP Interpreter' /&gt;&lt;/p&gt;
 
 &lt;p&gt;5. Enable debugging by clicking the green bug icon in the status bar.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/easyxdebug.png' alt='Easy Xdebug Enabled' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt='Easy Xdebug Enabled' src='/sites/brianfisher.name/files/field/image/easyxdebug.png' /&gt;&lt;/p&gt;
 
 &lt;p&gt;Easy Xdebug Enabled&lt;/p&gt;
 
 &lt;p&gt;6. Reload, and eclipse should pause execution at your breakpoint.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/debugging_0.png' alt='Debugging' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt='Debugging' src='/sites/brianfisher.name/files/field/image/debugging_0.png' /&gt;&lt;/p&gt;
 
 &lt;p&gt;Debugging&lt;/p&gt;
 

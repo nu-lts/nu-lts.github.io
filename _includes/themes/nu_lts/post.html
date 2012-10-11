@@ -1,12 +1,30 @@
-<div class="page-header">
-  <h1>{{ page.title }} <small>Supporting tagline</small></h1>
+<article>
+<div class="row-fluid">
+  <header class="page-header span12">
+    <h1>{{ page.title }} {% if page.tagline %}<small>{{ page.tagline }}</small>{% endif %}</h1>
+    {% if page.author %}<p>By {{ page.author }}</p>{% endif %}
+  </header>
 </div>
-
-<div class="row">
-  <div class="span8">
+<div class="row-fluid">
+  <section class="span10">
     {{ content }}
-    <hr>
-    <div class="pagination">
+  </section>
+  <aside class="span2">
+    <h4>Published</h4>
+    <div class="date"><span>{{ page.date | date_to_long_string }}</span></div>
+
+  {% unless page.tags == empty %}
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    {% assign tags_list = page.tags %}
+    {% include JB/tags_list %}
+    </ul>
+  {% endunless %}
+  </aside>
+</div>
+</article>
+
+<section class="pagination row-fluid">
       <ul>
       {% if page.previous %}
         <li class="prev"><a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; Previous</a></li>
@@ -20,21 +38,8 @@
         <li class="next disabled"><a>Next &rarr;</a>
       {% endif %}
       </ul>
-    </div>
+</section>
     <hr>
+<section>
     {% include JB/comments %}
-  </div>
-
-  <div class="span4">
-    <h4>Published</h4>
-    <div class="date"><span>{{ page.date | date_to_long_string }}</span></div>
-
-  {% unless page.tags == empty %}
-    <h4>Tags</h4>
-    <ul class="tag_box">
-    {% assign tags_list = page.tags %}
-    {% include JB/tags_list %}
-    </ul>
-  {% endunless %}
-  </div>
-</div>
+</section>
