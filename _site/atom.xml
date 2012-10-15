@@ -4,13 +4,81 @@
  <title>Library Technology Services</title>
  <link href="http://nu_lts.bitbucket.org/atom.xml" rel="self"/>
  <link href="http://nu_lts.bitbucket.org"/>
- <updated>2012-10-11T12:58:52-04:00</updated>
+ <updated>2012-10-12T12:09:17-04:00</updated>
  <id>http://nu_lts.bitbucket.org</id>
  <author>
    <name>Steven Bassett</name>
    <email>s.bassett@neu.edu</email>
  </author>
 
+ 
+ <entry>
+   <title>Adaptive Or Rwd Nu Library</title>
+   <link href="http://nu_lts.bitbucket.org/responsive-web-design/2012/10/12/Adaptive-or-RWD-NU-Library"/>
+   <updated>2012-10-12T00:00:00-04:00</updated>
+   <id>http://nu_lts.bitbucket.org/responsive-web-design/2012/10/12/Adaptive-or-RWD-NU-Library</id>
+   <content type="html">&lt;h1 id='current_condition'&gt;Current condition&lt;/h1&gt;
+
+&lt;h2 id='responsive_layouts'&gt;Responsive Layouts&lt;/h2&gt;
+
+&lt;p&gt;The current design is set to center at a static width of 900px.&lt;/p&gt;
+
+&lt;h4 id='screenshots_of_current_layouts'&gt;Screenshots of current layouts.&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src='/img/mobile_landscape.png' alt='title' /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src='/img/mobile_portrait.png' alt='title' /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src='/img/small_tablet_landscape.png' alt='title' /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src='/img/small_tablet_portrait.png' alt='title' /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src='/img/large_tablet_landscape.png' alt='title' /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src='/img/large_tablet_portrait.png' alt='title' /&gt;&lt;/p&gt;
+
+&lt;h2 id='navigation'&gt;Navigation&lt;/h2&gt;
+
+&lt;p&gt;Depends on hover.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src='/img/jump-menu-hover.png' alt='title' /&gt;&lt;/p&gt;
+
+&lt;h2 id='web_performance'&gt;Web Performance&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;From Google Page Speed&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;“Home | Northeastern University Libraries” got an overall PageSpeed Score of 64 (out of 100).&lt;/p&gt;
+
+&lt;h3 id='suggestion_summary'&gt;Suggestion Summary&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;High priority. These suggestions represent the largest potential performance wins for the least development effort. You should address these items first: * Enable Keep-Alive, Optimize images, Combine images into CSS sprites&lt;/li&gt;
+
+&lt;li&gt;Medium priority. These suggestions may represent smaller wins or much more work to implement. You should address this item next: * Enable compression&lt;/li&gt;
+
+&lt;li&gt;Low priority. These suggestions represent the smallest wins. You should only be concerned with these items after you&amp;#8217;ve handled the higher-priority ones: * Leverage browser caching, Defer parsing of JavaScript, Serve scaled images, Minify JavaScript, Minify HTML, Minimize request size, Specify image dimensions, Put CSS in the document head&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='web_accessibility'&gt;Web Accessibility&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href='http://five.wave.webaim.org/report#/library.northeastern.edu/'&gt;View full report from Web Accessibility Evaluation Tool - WAVE 5.0&lt;/a&gt; &lt;img src='/img/web_a11y.png' alt='title' /&gt;&lt;/p&gt;
+
+&lt;h2 id='how_can_we_respond'&gt;How can we respond?&lt;/h2&gt;
+
+&lt;p&gt;Here are some basic thoughts on how we can approach making a more adaptive or responsive theme for our current drupal website.&lt;/p&gt;
+
+&lt;h4 id='using_the_new_digital_repository_sites_theme_as_the_theme_to_port_over_to_the_library_site'&gt;Using the new digital repository site&amp;#8217;s theme as the theme to port over to the Library site.&lt;/h4&gt;
+
+&lt;p&gt;I would use a similar look and feel to design the new theme for the Digital Repository Service, then I could use that same theme to port over the same idea to the main library website.&lt;/p&gt;
+
+&lt;h4 id='upgrade_the_base_theme_and_then_try_replicating_and_modifing_a_new_starter_theme'&gt;Upgrade the base theme and then try replicating and modifing a new starter theme.&lt;/h4&gt;
+
+&lt;p&gt;Looking at the base theme we have Zen version 7.x-3.1 base to the new 7.x-5.x base which has changed the theme framework to become more responsive. This may be the best solution. I would look at creating a local environment, a brand new starter theme and then begin recalculating the theme to follow the current layout, but adding alternative layouts.&lt;/p&gt;
+
+&lt;h4 id='choose_a_new_base_theme'&gt;Choose a new base theme?&lt;/h4&gt;
+
+&lt;p&gt;I would be intereseted in looking at creating a new theme all together using Omega, Twitter Bootstrap or many other themes, but this would require more effort on our part.&lt;/p&gt;</content>
+ </entry>
  
  <entry>
    <title>Drupal Site Deployment</title>
@@ -275,8 +343,8 @@ sdk/downloads/list'&gt;Eclipse+PDT&lt;/a&gt; or &lt;a href='http://www.zend.com/
 
 &lt;p&gt;In Eclipse preferences, open PHP-&amp;gt;PHP Executables, and set the php interpreter to be the MAMP 5.3.x executable.&lt;/p&gt;
 
-&lt;p&gt;&lt;img alt='Eclipse PHP Interpreter' src='/sites/brianfisher.name/files/field/image/eclipse_i
-nterpreter.png' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/eclipse_i
+nterpreter.png' alt='Eclipse PHP Interpreter' /&gt;&lt;/p&gt;
 
 &lt;p&gt;Eclipse PHP Interpreter&lt;/p&gt;
 
@@ -284,13 +352,13 @@ nterpreter.png' /&gt;&lt;/p&gt;
 
 &lt;p&gt;1. File-&amp;gt;New-&amp;gt;Project: &amp;#8220;PHP Project from Existing Directory&amp;#8221;. Set the location to the MAMP htdocs directory &lt;em&gt;/Applications/MAMP/htdocs&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img alt='New Project' src='/files/field/image/new_project.png' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src='/files/field/image/new_project.png' alt='New Project' /&gt;&lt;/p&gt;
 
 &lt;p&gt;New Project&lt;/p&gt;
 
 &lt;p&gt;2. Open index.php, set breakpoint at first line of php (double click to left of line numbers).&lt;/p&gt;
 
-&lt;p&gt;&lt;img alt='A Breakpoint' src='/sites/brianfisher.name/files/field/image/breakpoint.png' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/breakpoint.png' alt='A Breakpoint' /&gt;&lt;/p&gt;
 
 &lt;p&gt;A Breakpoint&lt;/p&gt;
 
@@ -300,13 +368,13 @@ nterpreter.png' /&gt;&lt;/p&gt;
 
 &lt;p&gt;5. Enable debugging by clicking the green bug icon in the status bar.&lt;/p&gt;
 
-&lt;p&gt;&lt;img alt='Easy Xdebug Enabled' src='/sites/brianfisher.name/files/field/image/easyxdebug.png' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/easyxdebug.png' alt='Easy Xdebug Enabled' /&gt;&lt;/p&gt;
 
 &lt;p&gt;Easy Xdebug Enabled&lt;/p&gt;
 
 &lt;p&gt;6. Reload, and eclipse should pause execution at your breakpoint.&lt;/p&gt;
 
-&lt;p&gt;&lt;img alt='Debugging' src='/sites/brianfisher.name/files/field/image/debugging_0.png' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src='/sites/brianfisher.name/files/field/image/debugging_0.png' alt='Debugging' /&gt;&lt;/p&gt;
 
 &lt;p&gt;Debugging&lt;/p&gt;
 
