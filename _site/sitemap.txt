@@ -1,14 +1,14 @@
 
-http://nu_lts.bitbucket.org/archive.html
-http://nu_lts.bitbucket.org/atom.xml
-http://nu_lts.bitbucket.org/categories.html
-http://nu_lts.bitbucket.org/index.html
-http://nu_lts.bitbucket.org/pages.html
-http://nu_lts.bitbucket.org/sitemap.txt
-http://nu_lts.bitbucket.org/tags.html
+http://nu-lts.github.io/archive.html
+http://nu-lts.github.io/atom.xml
+http://nu-lts.github.io/categories.html
+http://nu-lts.github.io/index.html
+http://nu-lts.github.io/pages.html
+http://nu-lts.github.io/sitemap.txt
+http://nu-lts.github.io/tags.html
 
-http://nu_lts.bitbucket.org/responsive-web-design/2012/10/12/Adaptive-or-RWD-NU-Library
-http://nu_lts.bitbucket.org/drush/2012/10/11/Drupal-Site-Deployment
-http://nu_lts.bitbucket.org/drush/2012/10/10/deploy
-http://nu_lts.bitbucket.org/drush/2012/10/05/drush
-http://nu_lts.bitbucket.org/lessons/2011/12/29/jekyll-introduction
+http://nu-lts.github.io/2012/10/12/Adaptive-or-RWD-NU-Library
+http://nu-lts.github.io/drush/2012/10/11/Drupal-Site-Deployment
+http://nu-lts.github.io/drush/2012/10/10/deploy
+http://nu-lts.github.io/drush/2012/10/05/drush
+http://nu-lts.github.io/lessons/2011/12/29/jekyll-introduction

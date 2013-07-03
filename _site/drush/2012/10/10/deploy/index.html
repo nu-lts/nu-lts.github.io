@@ -9,19 +9,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Deploy</title>
         
-        <meta name="author" content="Steven Bassett">
+        <meta name="author" content="Northeastern University - Library Technology Services">
         <meta name="viewport" content="width=device-width">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-<!--         <link rel="stylesheet" href="css/normalize.css"> -->
+        <link rel="stylesheet" type="text/css" href="/assets/themes/nu_lts/css/global.css">
 
-<!--
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/cyborg.min.css">
--->
-        <link rel="stylesheet/less" type="text/css" href="/assets/themes/nu_lts/less/global.less">
-
-        <script src="/assets/themes/nu_lts/js/vendor/less-1.3.0.min.js" type="text/javascript"></script>
         <script>
           //call less to be in developer mode.
           //less.watch();
@@ -31,17 +23,17 @@
     </head>
 
   <body>
-<header class="jumbotron subhead">
-  <h1>
-    
-      <span class="nu">Northeastern University</br>
-      <span class="libraries">University Libraries</span></span>
-    
-  </h1>
-    <p class="lead">Library Techology Services</p>
-</header>
-
-    <div class="navbar navbar-static">
+    <header class="container-fluid"> 
+      <div class="row">
+        <div class="span4">
+          <h2>
+              <span class="nu">Northeastern University</br>
+              <span class="libraries">University Libraries</span></span>
+          </h2>
+        </div><!-- end span6 -->
+      </div><!-- end row -->
+    </header><!-- end container-fluid -->
+    <nav class="navbar navbar-static">
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -109,7 +101,7 @@
           </div> <!-- End nav collapse -->
         </div>
       </div>
-    </div>
+    </nav>
 <!-- end navbar -->
     <div class="container-fluid">
 
@@ -167,8 +159,8 @@ sdk/downloads/list'>Eclipse+PDT</a> or <a href='http://www.zend.com/en/products/
 
 <p>In Eclipse preferences, open PHP-&gt;PHP Executables, and set the php interpreter to be the MAMP 5.3.x executable.</p>
 
-<p><img src='/sites/brianfisher.name/files/field/image/eclipse_i
-nterpreter.png' alt='Eclipse PHP Interpreter' /></p>
+<p><img alt='Eclipse PHP Interpreter' src='/sites/brianfisher.name/files/field/image/eclipse_i
+nterpreter.png' /></p>
 
 <p>Eclipse PHP Interpreter</p>
 
@@ -176,13 +168,13 @@ nterpreter.png' alt='Eclipse PHP Interpreter' /></p>
 
 <p>1. File-&gt;New-&gt;Project: &#8220;PHP Project from Existing Directory&#8221;. Set the location to the MAMP htdocs directory <em>/Applications/MAMP/htdocs</em></p>
 
-<p><img src='/files/field/image/new_project.png' alt='New Project' /></p>
+<p><img alt='New Project' src='/files/field/image/new_project.png' /></p>
 
 <p>New Project</p>
 
 <p>2. Open index.php, set breakpoint at first line of php (double click to left of line numbers).</p>
 
-<p><img src='/sites/brianfisher.name/files/field/image/breakpoint.png' alt='A Breakpoint' /></p>
+<p><img alt='A Breakpoint' src='/sites/brianfisher.name/files/field/image/breakpoint.png' /></p>
 
 <p>A Breakpoint</p>
 
@@ -192,13 +184,13 @@ nterpreter.png' alt='Eclipse PHP Interpreter' /></p>
 
 <p>5. Enable debugging by clicking the green bug icon in the status bar.</p>
 
-<p><img src='/sites/brianfisher.name/files/field/image/easyxdebug.png' alt='Easy Xdebug Enabled' /></p>
+<p><img alt='Easy Xdebug Enabled' src='/sites/brianfisher.name/files/field/image/easyxdebug.png' /></p>
 
 <p>Easy Xdebug Enabled</p>
 
 <p>6. Reload, and eclipse should pause execution at your breakpoint.</p>
 
-<p><img src='/sites/brianfisher.name/files/field/image/debugging_0.png' alt='Debugging' /></p>
+<p><img alt='Debugging' src='/sites/brianfisher.name/files/field/image/debugging_0.png' /></p>
 
 <p>Debugging</p>
 
@@ -296,33 +288,13 @@ php -i | grep  php.ini</code></pre>
     <hr>
 <section>
     
-
-
-  <div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_developer = 1;
-    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
-    
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-
-
-
-
 </section>
 
 
       </div>
 
       <footer>
-        <p>&copy; Steven Bassett 2012
+        <p>&copy; Northeastern University - Library Technology Services 2012
           with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
           and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
         </p>
@@ -333,15 +305,15 @@ php -i | grep  php.ini</code></pre>
         <script>window.jQuery || document.write('<script src="/assets/themes/nu_lts/js/vendor/jquery-1.8.0.min.js"><\/script>')</script>
         <script src="/assets/themes/nu_lts/js/plugins.js"></script>
         <script src="/assets/themes/nu_lts/js/main.js"></script>
-        <script src="/assets/themes/nu_lts/js/vendor/bootstrap.js"></script>
+        <script src="/assets/themes/nu_lts/js/vendor/bootstrap.min.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
+        <!--script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
+        </script-->
   </body>
 </html>
 
