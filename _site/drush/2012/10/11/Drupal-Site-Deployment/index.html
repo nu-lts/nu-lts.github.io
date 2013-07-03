@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Drupal Site Deployment</title>
+        
+        <meta name="author" content="Steven Bassett">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<!--         <link rel="stylesheet" href="css/normalize.css"> -->
+
+<!--
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/cyborg.min.css">
+-->
+        <link rel="stylesheet/less" type="text/css" href="/assets/themes/nu_lts/less/global.less">
+
+        <script src="/assets/themes/nu_lts/js/vendor/less-1.3.0.min.js" type="text/javascript"></script>
+        <script>
+          //call less to be in developer mode.
+          //less.watch();
+        </script>
+
+        <script src="/assets/themes/nu_lts/js/vendor/modernizr-2.6.1.min.js"></script>
+    </head>
+
+  <body>
+<header class="jumbotron subhead">
+  <h1>
+    
+      <span class="nu">Northeastern University</br>
+      <span class="libraries">University Libraries</span></span>
+    
+  </h1>
+    <p class="lead">Library Techology Services</p>
+</header>
+
+    <div class="navbar navbar-static">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">Library Technology Services</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              
+              
+              
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">Archive</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">Categories</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">Pages</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">Tags</a></li>
+      	
+      
+    
+  
+
+
+
+            </ul>
+          </div> <!-- End nav collapse -->
+        </div>
+      </div>
+    </div>
+<!-- end navbar -->
+    <div class="container-fluid">
+
+      <div class="content">
+        
+<article>
+<div class="row-fluid">
+  <header class="page-header span12">
+    <h1>Drupal Site Deployment <small>Less time, more beer.</small></h1>
+    <p>By Steven Bassett</p>
+  </header>
+</div>
+<div class="row-fluid">
+  <section class="span10">
+    <p>This is a short article on how to use a local Linux, Apache, MySQL and PHP environment for website development and deployment to the staging and/or production server. I please leave comments if you have any additional suggestions.</p>
+
+<h2 id='installing_the_required_software_locally'>Installing the required software locally.</h2>
+
+<p>You will need to make sure that that you have the software installed and configured before you can try moving a site locallly.</p>
+
+<h3 id='download_and_install_mamp_or_mamp_pro'>Download and install <a href='http://www.mamp.info/en/index.html'>MAMP or MAMP Pro</a>.</h3>
+
+<p>I like to configure my development enviroment to point to the <code>~/Sites/</code> directory to serve the sites.</p>
+
+<h3 id='installing_git_version_control'>Installing git version control</h3>
+
+<p>Download and install the latest version of <a href='http://git-scm.com/'>git</a>. Follow the instructions. If you’re looking for some enticing reading, check out <a href='http://git-scm.com/book'>Pro Git</a> for detailed infomation about git version control.</p>
+
+<h3 id='installing_drush'>Installing Drush</h3>
+
+<p>Please read the following Administration Guide from Drupal.org for the most up to date information on installing drush <a href='https://drupal.org/node/1791676'>Specific instructions for installing Drush on different platforms</a>.</p>
+
+<h4 id='drush_with_mamp_pro'>Drush with MAMP Pro</h4>
+
+<p><em>Please read this article for the most up to date information</em> <a href='http://brianfisher.name/content/drupal-development-environment-os-x-mamp-pro-eclipse-xdebug-and-drush'>Original Article</a> These instructions are somewhat specific to MAMP PRO 2.1.1. <a href='http://www.mamp.info/en/downloads/index.html'>Download</a>, install, and launch MAMP Pro.</p>
+
+<p>Under the PHP tab, select php 5.x from version pulldown. Click &#8220;Apply&#8221;. Click &#8220;Start&#8221;.</p>
+
+<p>Add the MAMP executables to your path.</p>
+
+<pre><code>chmod +x /Applications/MAMP/bin/php/php5.3.14/bin/*
+echo &quot;export PATH=/Applications/MAMP/bin/php/php5.3.14/bin:/Applications/MAMP/Library/bin:\$PATH&quot; &gt;&gt; ~/.profile
+. ~/.profile</code></pre>
+
+<p>Add a symlink to the MAMP Mysql socket to allow drush to connect</p>
+
+<pre><code>sudo mkdir /var/mysql
+sudo ln -s /Applications/MAMP/tmp/mysql/mysql.sock /var/mysql/mysql.sock</code></pre>
+
+<h5 id='performace'>Performace</h5>
+
+<p>Please change the default php and mysql settings so that there are enough resources for both drush and drupal to run.</p>
+
+<h6 id='mysql'>MYSQL</h6>
+
+<p>You may get &#8220;MySql server has gone away&#8221; errors. To fix, in MAMP, edit the mysql configuration by going to file-&gt;edit template-&gt;mysql. Change <code>max_allowed_packet</code> to <code>max_allowed_packet =  16M</code></p>
+
+<h6 id='php'>PHP</h6>
+
+<p>Increase both the MAMP PHP memory limit. In MAMP, edit the php configuration file-&gt;edit template-&gt;php-&gt;php5.3 change <code>memory_limit</code> to <code>memory_limit =  256M</code></p>
+
+<p>Increase the CLI PHP memory limit. To figure out where your CLI php.ini file is, use: <code>$ which php</code> then <code>php -i | grep  php.in</code>. Then edit the file and change <code>memory_limit</code> to <code>memory_limit =  -1</code>.</p>
+
+<h3 id='cloning_production_site_to_your_local_environment'>Cloning production site to your local environment.</h3>
+
+<h4 id='clone_the_git_repository'>Clone the Git repository.</h4>
+
+<p>Open Terminal. Use git to clone the repository for the project you’re working on from our <a href='https://bitbucket.org/nu_lts'>Bitbucket Account</a>. For example use, <code>git clone git@bitbucket.org:nu_lts/dmc.git ~/sites/dmc.neu.edu/</code>, <em>clone from remote to this directory</em>. Note that this will only bring down the code that is being tracked by the git repository. It will not bring down any files or directories not tracked by Git.</p>
+
+<h3 id='setting_up_drush_site_aliases'>Setting Up Drush Site Aliases</h3>
+
+<p>Go to your root apache htdocs folder, in my case <code>cd ~/Sites</code>. Set up a file structure such as: <code>~/Sites/library.neu.edu/</code> to act as the local root for your Drupal directory. This would let you access your site from<a href='localhost:8888/library.neu.edu/'>localhost:8888/library.neu.edu/</a> in a default MAMP environment.</p>
+
+<h5 id='where_drush_looks_for_aliases'>Where drush looks for aliases.</h5>
+
+<p>I have used the following location by using: <code>cp /path/to/drush/examples/example.aliases.drushrc.php ~/.drush/aliases.drushrc.php</code> to move the example file with documentation to my home directory that drush will look at to find aliases.</p>
+
+<p>Defualt Locations</p>
+
+<ul>
+<li>/etc/drush</li>
+
+<li>$HOME/.drush</li>
+
+<li>The sites/all/drush folder for the current Drupal site</li>
+</ul>
+
+<p>Edit the <code>aliases.drushrc.php</code> file by configuring the production, staging and local environment you would like to work with eg:</p>
+
+<pre><code>$aliases[&#39;dmc.local&#39;] = array(
+&#39;uri&#39; =&gt; &#39;localhost:8888/dmc.neu.edu&#39;,
+&#39;root&#39; =&gt; &#39;/Users/steven/Sites/dmc.neu.edu&#39;, // This doesn&#39;t work with ~/Sites/dev.local
+&#39;db_url&#39; =&gt; &#39;mysql://root:root@localhost:8889/dmc&#39;,
+&#39;path-aliases&#39; =&gt; array(
+  &#39;%files&#39; =&gt; &#39;sites/defualt/files&#39;,
+  &#39;%dump&#39; =&gt; &#39;/Users/steven/tmp/drush/sql-sync-dev-local.sql&#39;, // Arbitrary location for temp files
+  ),
+);
+$aliases[&#39;dmc.prod&#39;] = array(
+&#39;uri&#39; =&gt; &#39;defualt&#39;,
+&#39;root&#39; =&gt; &#39;/var/www/html&#39;,
+&#39;databases&#39; =&gt;
+  array (
+   &#39;default&#39; =&gt;
+   array (
+   &#39;default&#39; =&gt;
+   array (
+   &#39;database&#39; =&gt; &#39;dmc&#39;,
+   &#39;username&#39; =&gt; &#39;dmc1&#39;,
+   &#39;password&#39; =&gt; ‘****’,
+   &#39;host&#39; =&gt; &#39;localhost&#39;,
+   &#39;port&#39; =&gt; &#39;&#39;,
+   &#39;driver&#39; =&gt; &#39;mysql&#39;,
+   &#39;prefix&#39; =&gt; &#39;&#39;,
+   ),
+   ),
+  ),
+&#39;remote-user&#39; =&gt; &#39;sbassett&#39;,
+&#39;remote-host&#39; =&gt; &#39;155.33.22.226&#39;,
+&#39;path-aliases&#39; =&gt; array(
+  &#39;%drush&#39; =&gt; &#39;/usr/local/share/drush&#39;,
+  &#39;%site&#39; =&gt; &#39;sites/default&#39;,
+  &#39;%files&#39; =&gt; &#39;sites/defualt/files&#39;,
+  &#39;%dump&#39; =&gt; &#39;tmp&#39;, // Arbitrary location for temp files
+  ),
+);</code></pre>
+
+<h3 id='finding_the_site_information_for_the_aliases'>Finding the site information for the aliases</h3>
+
+<p>Tip from <a href='https://drupal.org/node/670460'>Using drush to synchronize and deploy sites</a>. Creating the site-alias config array is tedious by hand. If you have a working site. Change into the site dir of a working site and run <code>drush site-alias --with-db --show-passwords --with-optional @self</code> I often go <code>drush site-alias --with-db --show-password --with-optional @self &gt;
+/etc/drush/mysqit.alias.drushrc.php</code> and then <strong>importantly</strong> edit the resulting new files and A: add a <code>&lt;?php</code> tag to the top! B: relabel it from @self to your preferred nickname - which must match the filename you used. Those extra connection details are required for remote aliases. If you want, you can also split out the component parts of an alias and use inheritance to construct the peer alias.</p>
+
+<h3 id='ssh_key_pairs'>SSH Key Pairs</h3>
+
+<p><strong>Required for Drush to work with remote servers</strong></p>
+
+<p>Go to your .ssh directory: <code>$ cd ~/.ssh</code> Check for keys:</p>
+
+<pre><code>$ ls
+id_rsa		id_rsa.pub</code></pre>
+
+<p>If there are no keys like that above try creating the keys using the directions from github:</p>
+
+<pre><code>$ ssh-keygen -t rsa -C &quot;your_email@youremail.com&quot;
+# Creates a new ssh key using the provided email
+# Generating public/private rsa key pair.
+# Enter file in which to save the key (/Users/you/.ssh/id_rsa): [Press enter]</code></pre>
+
+<p>Do not enter a passphrase:</p>
+
+<pre><code>Enter passphrase (empty for no passphrase): [Press enter]
+Enter same passphrase again: [Press enter]</code></pre>
+
+<p>Should return:</p>
+
+<pre><code>Your identification has been saved in /Users/you/.ssh/id_rsa.
+Your public key has been saved in /Users/you/.ssh/id_rsa.pub.
+The key fingerprint is:
+01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db your_email@youremail.com</code></pre>
+
+<p>Make sure to create the <code>touch ~/.ssh/authorized_keys</code> file. Try to create the permissions to be like the following for your environment:</p>
+
+<pre><code>$ cd ~/.ssh
+$ ls -al
+drwx------ 2 user user 4096 Oct 10 12:31 .
+drwx------ 3 user user 4096 Oct 10 12:51 ..
+-rw------- 1 user user  808 Oct 10 12:50 authorized_keys
+-rw------- 1 user user 1675 Oct 10 12:31 identity
+-rw------- 1 user user 1675 Oct 10 12:16 id_rsa
+-rw-r--r-- 1 user user  398 Oct 10 12:16 id_rsa.pub</code></pre>
+
+<p>SSH into the remote server <code>$ ssh user@example.neu.edu</code>, then create a keypair for the remote server using the same method above. <strong>(Don’t forget to check the permissions!)</strong> When you have completed the steps on both your local and remote machines, then you can add your key to the remote server. From your <strong>local terminal</strong>: $ login=username@hostname $ ssh $login &#8220;echo &#8217;<code>cat ~/.ssh/id_rsa.pub</code>&#8217;&#160;&#187; ~/.ssh/authorized_keys&#8221;</p>
+
+<p>To debug what might be happening you can run: $ ssh -v user@server.edu <strong><em>Need more assistance making a bootstrap way of creating key pairs.</em></strong></p>
+
+<h3 id='using_drush_commands_on_remote_servers'>Using Drush commands on remote servers</h3>
+
+<p>To use drush commands on a remote server you can simply use the alias for. For example I can look and see the basic site status for the DMC website. <code>$ drush @dmc.prod status</code> should return the basic overview of the remote site.</p>
+
+<h3 id='using_rsync_to_fetch_files_from_the_remote_server'>Using rsync to fetch files from the remote server.</h3>
+
+<p>Go fetch the files from our production server to local server: <code>drush rsync @dmc.prod:%files/ @dmc.local:%files/
+</code></p>
+
+<h3 id='using_drush_to_run_a_site_install'>Using drush to run a site install</h3>
+
+<p>Before running the command please make sure to look at <code>drush site-install —help</code> for instructions. To install the local site into mamp you can run the following command:</p>
+
+<pre><code>$ drush @dmc.local use
+$ drush si</code></pre>
+
+<p>If the aliases are configured correctly, you can go the the local url eg localhost:8888/dmc.neu.edu/ and it should install a basic site. Nothing special.</p>
+
+<h3 id='using_drush_to_sync_the_databases'>Using drush to sync the databases</h3>
+
+<p><em>Note: you will probably want to clear the cache on both sites before the transfer</em> <code>$ drush cc all</code>. Use the drush <code>sql-sync</code> command to send from source to target. For example to create your local enviromnet, you will want to pull down the sql database using: <code>$ drush sql-sync @dmc.prod @dmc.local</code></p>
+
+<h3 id='notes_for_trouble_shooting_whitescreenofdeath_wsod'>Notes for trouble shooting White-Screen-Of-Death (WSOD)</h3>
+
+<p>Try turning off clean urls: <code>$ drush vset --exact clean_url 0</code></p>
+
+<p>Clear the cache <code>$ drush cc all</code></p>
+
+<p>Look at the settings.php file in the sites/default/ directory.</p>
+
+<p>Look at the .htaccess file.</p>
+
+<p>Refer to the php.ini files to make sure that MAMP is configured to give enough memory for both drush and drupal to run.</p>
+
+<p>Check your mysql and php error logs, with MAMP they are located <code>/Applications/MAMP/logs/</code></p>
+
+<h2 id='articles'>Articles</h2>
+
+<ul>
+<li><a href='https://drupal.org/node/670460'>Using drush to synchronize and deploy sites</a></li>
+
+<li><a href='http://brianfisher.name/content/drupal-development-environment-os-x-mamp-pro-eclipse-xdebug-and-drush'>A Drupal Development Environment on OS X with MAMP Pro, Eclipse, xDebug, and Drush</a></li>
+
+<li><a href='https://drupal.org/node/601604'>getting drush to work on a MAMP setup</a></li>
+
+<li><a href='http://drush.ws/'>Drush Official Site</a></li>
+</ul>
+  </section>
+  <aside class="span2">
+    <h4>Published</h4>
+    <div class="date"><span>11 October 2012</span></div>
+
+  
+    <h4>Tags</h4>
+    <ul class="tag_box">
+    
+    
+
+
+  
+     
+    	<li><a href="/tags.html#drupal-ref">drupal <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#drush-ref">drush <span>3</span></a></li>
+     
+    	<li><a href="/tags.html#git-ref">git <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#mamp-ref">mamp <span>1</span></a></li>
+     
+    	<li><a href="/tags.html#developer tools-ref">developer tools <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+  
+  </aside>
+</div>
+</article>
+
+<section class="pagination row-fluid">
+      <ul>
+      
+        <li class="prev"><a href="/drush/2012/10/10/deploy" title="Deploy">&larr; Previous</a></li>
+      
+        <li><a href="/archive.html">Archive</a></li>
+      
+        <li class="next"><a href="/responsive-web-design/2012/10/12/Adaptive-or-RWD-NU-Library" title="Adaptive Or Rwd Nu Library">Next &rarr;</a></li>
+      
+      </ul>
+</section>
+    <hr>
+<section>
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+</section>
+
+
+      </div>
+
+      <footer>
+        <p>&copy; Steven Bassett 2012
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div> <!-- /container -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/assets/themes/nu_lts/js/vendor/jquery-1.8.0.min.js"><\/script>')</script>
+        <script src="/assets/themes/nu_lts/js/plugins.js"></script>
+        <script src="/assets/themes/nu_lts/js/main.js"></script>
+        <script src="/assets/themes/nu_lts/js/vendor/bootstrap.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+  </body>
+</html>
+
